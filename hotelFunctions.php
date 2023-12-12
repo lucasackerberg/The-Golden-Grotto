@@ -50,3 +50,11 @@ function isValidUuid(string $uuid): bool
     }
     return true;
 }
+
+function sanitizeAndSend(string $date): string
+{
+    $dateValue = $_POST['dates'];
+    $dateValue = htmlspecialchars(trim($dateValue));
+    echo $dateValue;
+    return $dateValue;
+}
