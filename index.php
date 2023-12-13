@@ -14,48 +14,79 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="styles.css">
     <title>The Golden Grotto</title>
 </head>
 <body>
     <nav>
-        <img src="assets/images/logo.jpg" alt="">
+        <span class="goldenspan"><a href="index.php"><h1>THE GOLDEN GROTTO</h1></a></span>
         <div class="navlista">
             <ul class="nav-list">
-                <li>HOME</li>
-                <li>ABOUT US</li>
-                <li>BOOKING</li>
-                <li>SPA & POOL AREA</li>
+                <li><a href="index.php">HOME</a></li>
+                <li><a href="index.php">ABOUT US</a></li>
+                <li><a href="index.php">ROOMS</a></li>
+                <li><a href="index.php">ACTIVITIES</a></li>
             </ul>   
         </div>
     </nav>
     <div class="wrapper">
         <div class="hero">
-            <img src="assets/images/logo.jpg" alt="">
-        </div>
-        <div class="formWrapper">
-            <form class="formWrapper" action="index.php" method="POST"> 
-                <input name="extraFeature" type="checkbox">
-                <input name="extraFeature2" type="checkbox">
-                <div class="datepickerWrapper" style="border: 1px solid #ccc; background: #fff; cursor: pointer; padding: 5px 10px;">
-                    <i class="fa-solid fa-calendar"></i>
-                    <input class="datepicker" type="text" id="demo" name="dates">
-                    <i class="fa-solid fa-caret-down"></i>
+            <div class="heroimg">
+                <div class="welcome">
+                    <h3>Welcome to <span class="goldenspan">The Golden Grotto</span></h3>
+                    <p>This hotel is designed to make you leave all your worries blablabla.</p>
                 </div>
-                <button>Book</button>
-            </form>
+            </div>
         </div>
+        <div class="transition"></div>
         <div class="roomwrapper">
-            <div class="roomOne"></div>
-            <div class="roomTwo"></div>
-            <div class="roomThree"></div>
+            <!-- Swiper -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <img src="assets/images/luxury-grotto.jpg" alt="">
+                        <div class="info">
+                            <h3>Golden Oasis Suite</h3>
+                            <p>The Golden Oasis Suite is a luxurious escape from reality. <br> Starting at <span class="bigger">15$</span> per night</p>
+                            <a href="roomone.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="assets/images/medium-grotto.jpg" alt="">
+                        <div class="info">
+                            <h3>Gilded Grotto Retreat</h3>
+                            <p>The Gilded Grotto Retreat is a premier comfort experience. <br> Starting at <span class="bigger">10$</span> per night</p>
+                            <a href="roomtwo.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <img src="assets/images/simple-grotto.jpg" alt="">
+                        <div class="info">
+                            <h3>Sunlit Aurum Chamber</h3>
+                            <p>The Sunlit Aurum Chamber is classic elegance room. <br> Starting at <span class="bigger">7$</span> per night</p>
+                            <a href="roomthree.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        <div class="transition"></div>
+        <div class="activities">
+
         </div>
     </div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://kit.fontawesome.com/7ca45ddd8f.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
