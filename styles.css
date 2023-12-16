@@ -3,6 +3,7 @@ body {
     padding: 0px;
     box-sizing: border-box;
     background-color: #131717;
+    color: white;
 }
 
 nav{
@@ -66,9 +67,20 @@ nav span a {
 }
 
 .wrapper{
+    display: flex;
+    flex-direction: column;
     width:100%;
     height: 100%;
     background-color: #131717;
+    gap: 30px;
+}
+
+.wrapperroomone{
+    display: flex;
+    width:100%;
+    height: 100%;
+    background-color: #131717;
+    gap: 20px;
 }
 
 .hero{
@@ -123,11 +135,28 @@ nav span a {
     gap: 10px;
     width: 22%;
     height: 100px;
+    color:black;
+    width:225px;
+    height: 60px;
+    border-radius: 20px;
+}
+
+tbody{
+    color:#131717;
+}
+
+.formWrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }
 
 .datepicker{
     width: 400px;
-    height: 70px;
+    height: 68px;
+    border: none;
 }
 
 .roomwrapper{
@@ -206,4 +235,89 @@ nav span a {
 
 .swiper-button-prev, .swiper-button-next{
     color: #131717;
+}
+
+.transfercode{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.transfercode input{
+    width: 225px;
+    height: 40px;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+.transfercode button{
+    background-color: #f6e27a;
+    border: none;
+    color:#131717;
+    padding: 8px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: 'Cinzel';
+}
+
+.picsAndInfo{
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+.infoColumn{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding: 10px 10px 0 10px;
+    width: 30%;
+    height: 100%;
+}
+
+.picColumn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    padding: 10px 10px 0 10px;
+    gap: 10px;
+}
+
+.roompic{
+    width: 50%;
+    height: 50%;
+    background-image: url(assets/images/luxury-grotto.jpg);
+    background-size:cover;
+    border-radius: 15px;
+}
+
+.sectionTwo{
+    display: flex;
+    height: 50%;
+    width: 100%;
+    gap: 10px;
+}
+
+.bathroompic{
+    width: 40%;
+    height: 100%;
+    background-image: url(assets/images/luxurybathroom.jpg);
+    background-size: cover;
+    border-radius: 15px;
+}
+
+.outsidepic{
+    width: 40%;
+    height: 100%;
+    background-image: url(assets/images/pathtoroom.jpg);
+    background-size: cover;
+    border-radius: 15px;
 }

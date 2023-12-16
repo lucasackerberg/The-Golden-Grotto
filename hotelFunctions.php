@@ -51,10 +51,38 @@ function isValidUuid(string $uuid): bool
     return true;
 }
 
-function sanitizeAndSend(string $date): string
+function sanitizeAndSend(?string $date): ?string
 {
-    $dateValue = $_POST['dates'];
-    $dateValue = htmlspecialchars(trim($dateValue));
-    echo $dateValue;
-    return $dateValue;
+    if ($date === null) {
+        return null;
+    }
+
+    $sanitizedDate = htmlspecialchars(trim($date));
+    list($startDate, $endDate) = explode(' - ', $sanitizedDate);
+
+    // gör om till DateTime för att kunna räkna tid mellan dagarna.
+    $startDateTime = new DateTime($startDate);
+    $endDateTime = new DateTime($endDate);
+
+    // Gör om till midnatt.
+    $startDateTime->setTime(0, 0, 0);
+    $endDateTime->setTime(0, 0, 0);
+    // Calculate the difference in days
+    $dateDiff = $startDateTime->diff($endDateTime);
+    $daysDifference = $dateDiff->days + 1;
+
+    // Echoa ut skillnaden i dagar.
+    echo "Difference in Days: $daysDifference";
+    // Returna värdet.
+    return $sanitizedDate;
 }
+
+function calculateTotalCost($days, $additionalItems) {
+    $baseCostPerDay = 15;
+    $costPerAdditionalItem = 3;
+  
+    // Calculate the total cost
+    $totalCost = ($days * $baseCostPerDay) + ($additionalItems * $costPerAdditionalItem);
+  
+    return $totalCost;
+  }

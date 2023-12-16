@@ -2,12 +2,6 @@
 /* php stuff */
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/hotelFunctions.php');
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['dates'])) {
-        $date = $_POST['dates'];
-        sanitizeAndSend($date);
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
