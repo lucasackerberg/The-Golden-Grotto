@@ -11,6 +11,11 @@ one function to create a guid,
 and one function to control if a guid is valid.
 */
 
+/* --------------------------------------------------- DATABASE --------------------------------------> */
+$dbName = 'database.db';
+$db = connect($dbName);
+$bookedDatesforLuxuryroom = getBookedDatesforLuxuryroom($db);
+
 function connect(string $dbName): object
 {
     $dbPath = __DIR__ . '/' . $dbName;
@@ -28,6 +33,24 @@ function connect(string $dbName): object
     return $db;
 }
 
+function getBookedDatesforLuxuryroom(PDO $db): array
+{
+    $stmt = $db->query("SELECT checkin_date, checkout_date FROM bookings WHERE room_id == 1");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function getBookedDatesforMediumroom(PDO $db): array
+{
+    $stmt = $db->query("SELECT checkin_date, checkout_date FROM bookings WHERE room_id == 2");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+function getBookedDatesforCasualroom(PDO $db): array
+{
+    $stmt = $db->query("SELECT checkin_date, checkout_date FROM bookings WHERE room_id == 3");
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
+
+/* ---------------------------------------------------- GUID ----------------------------------------> */
 function guidv4(string $data = null): string
 {
     // Generate 16 bytes (128 bits) of random data or use the data passed into the function.
@@ -51,6 +74,8 @@ function isValidUuid(string $uuid): bool
     return true;
 }
 
+/* --------------------------------------------- PHP BOOKING FUNCTIONS ------------------> */
+
 function sanitizeAndSend(?string $date): ?string
 {
     if ($date === null) {
@@ -72,17 +97,40 @@ function sanitizeAndSend(?string $date): ?string
     $daysDifference = $dateDiff->days + 1;
 
     // Echoa ut skillnaden i dagar.
-    echo "Difference in Days: $daysDifference";
+    //echo "Difference in Days: $daysDifference";
     // Returna värdet.
-    return $sanitizedDate;
+    echo $startDate;
+    echo $endDate;
+    return $daysDifference;
 }
 
-function calculateTotalCost($days, $additionalItems) {
-    $baseCostPerDay = 15;
+// Efter POST från room-sida. \/
+// Function to calculate total cost
+function calculateTotalCost($baseCostPerDay, $days, $additionalItems) {
     $costPerAdditionalItem = 3;
   
     // Calculate the total cost
     $totalCost = ($days * $baseCostPerDay) + ($additionalItems * $costPerAdditionalItem);
   
     return $totalCost;
-  }
+}
+
+// Retrieve and sanitize other form data
+// ...
+
+// Retrieve selected checkboxes for extra features
+$extraFeature = isset($_POST['extraFeature']) ? $_POST['extraFeature'] : 0;
+$extraFeature2 = isset($_POST['extraFeature2']) ? $_POST['extraFeature2'] : 0;
+
+// Base cost per day (you may get this value from your database or set it as needed)
+$baseCostPerDay = 15;
+
+// Calculate the total number of days (you need to implement this part based on your logic)
+$days = 3; // Replace with the actual number of days selected by the user
+
+// Calculate the total cost including extra features
+$totalCost = calculateTotalCost($baseCostPerDay, $days, $extraFeature + $extraFeature2);
+
+// Use $totalCost as needed, e.g., store in the database or display to the user
+/* echo "Total Cost: $" . $totalCost; */
+?>

@@ -2,6 +2,7 @@
 /* php stuff */
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/hotelFunctions.php');
+/* var_dump(getBookedDates($db)); */ 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['dates'])) {
         $date = $_POST['dates'];
@@ -23,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>The Golden Grotto</title>
 </head>
 <body>
-<nav>
+    <nav>
         <span class="goldenspan"><a href="index.php"><h1>THE GOLDEN GROTTO</h1></a></span>
         <div class="navlista">
             <ul class="nav-list">
@@ -48,23 +49,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         </div>
-        <div class="formWrapper">
-                <form class="formWrapper" action="roomone.php" method="POST"> 
-                    <input name="extraFeature" type="checkbox" value="3"> <p>Extra Feature</p>
-                    <input name="extraFeature2" type="checkbox" value="3"> <p>Extra Feature 2</p>
-                    <div class="datepickerWrapper" style="border: 1px solid #ccc; background: #fff; cursor: pointer; padding: 5px 10px;">
-                        <i class="fa-solid fa-calendar"></i>
-                        <input class="datepicker" type="text" id="demo" name="dates">
-                        <i class="fa-solid fa-caret-down"></i>
-                    </div>
-                    <div class="transfercode">
-                       <input class="transfercodeinput" type="text" name="transfercode" placeholder="Write your transfercode here!">
-                       <button>Book</button>
-                   </div>
-                </form>
-
+        <div class="bookingWrapper">
+            <div class="bookingInformation" id="bookingInformation">
+                <p>Cost per day is <span class="goldenspan">15$</span> for this room.</p>
+                <!-- lägg till genom js -->
+            </div>
+            <form class="formWrapper" action="roomone.php" method="POST">
+                <input id="massageCheckbox" name="extraFeature" type="checkbox" value="3"> <p>Lava massage 3$ USD</p>
+                <input id="poolCheckbox" name="extraFeature2" type="checkbox" value="3"> <p>Pool access: 3$ USD</p>
+                <div class="datepickerWrapper">
+                    <i class="fa-solid fa-calendar"></i>
+                    <input class="datepicker" type="text" id="demo" name="dates">
+                    <i class="fa-solid fa-caret-down"></i>
+                </div>
+                <div class="transfercode">
+                    <input type="text" class="transfercodeinput" placeholder="Please enter your first name!" name="firstname">
+                    <input type="text" class="transfercodeinput" placeholder="Please enter your last name!" name="lastname">
+                    <input class="transfercodeinput" type="text" name="transfercode" placeholder="Write your transfercode here!">
+                    <button>Book</button>
+                </div>
+            </form>
         </div>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">The Golden Grotto</div>
+                <div class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Rooms</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+        </footer>
     </div>
+    <script> const bookedDates = <?php echo json_encode($bookedDatesforLuxuryroom); ?>; </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

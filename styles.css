@@ -139,10 +139,19 @@ nav span a {
     width:225px;
     height: 60px;
     border-radius: 20px;
+    border: 1px solid #ccc; 
+    background: #fff; 
+    cursor: pointer; 
+    padding: 5px 10px;
 }
 
 tbody{
     color:#131717;
+}
+
+.bookingWrapper{
+    display: flex;
+    justify-content:space-around;
 }
 
 .formWrapper{
@@ -320,4 +329,32 @@ tbody{
     background-image: url(assets/images/pathtoroom.jpg);
     background-size: cover;
     border-radius: 15px;
+}
+
+footer {
+    background-color: #131717;
+    color: whitesmoke;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.footer-links {
+    display: flex;
+    gap: 20px;
+}
+
+.footer-links a {
+    color: whitesmoke;
+    text-decoration: none;
 }

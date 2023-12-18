@@ -75,6 +75,17 @@ require(__DIR__ . '/hotelFunctions.php');
         <div class="activities">
 
         </div>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">The Golden Grotto</div>
+                <div class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">About Us</a>
+                    <a href="#">Rooms</a>
+                    <a href="#">Contact</a>
+                </div>
+            </div>
+        </footer>
     </div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
