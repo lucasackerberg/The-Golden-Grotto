@@ -15,6 +15,8 @@ and one function to control if a guid is valid.
 $dbName = 'database.db';
 $db = connect($dbName);
 $bookedDatesforLuxuryroom = getBookedDatesforLuxuryroom($db);
+$bookedDatesforMediumroom = getBookedDatesforMediumroom($db);
+$bookedDatesforCasualroom = getBookedDatesforCasualroom($db);
 
 function connect(string $dbName): object
 {
@@ -49,6 +51,49 @@ function getBookedDatesforCasualroom(PDO $db): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
+function isAvailable($db, $startDate, $endDate) {
+    // Perform a database query to check availability
+    // You'll need to customize this query based on your database schema
+    $query = "SELECT COUNT(*) FROM bookings 
+              WHERE (checkin_date < :end_date AND checkout_date > :start_date)";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':start_date', $startDate);
+    $stmt->bindParam(':end_date', $endDate);
+    $stmt->execute();
+    $count = $stmt->fetchColumn();
+
+    return $count === 0; // If count is 0, dates are available
+}
+
+// hotelFunctions.php
+
+function insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber) {
+    var_dump($totalcosttot);
+    // Perform a database query to insert the booking
+    // Customize this query based on your database schema
+    $query = "INSERT INTO bookings (checkin_date, checkout_date, booked_by, poolaccess, lavamassage, total_cost, room_id)
+              VALUES (:start_date, :end_date, :full_name, :pool_access, :lava_massage, :total_cost, :room_id)";
+    $stmt = $db->prepare($query);
+
+    // Determine the values for pool access and lava massage based on checkbox status
+    $poolAccessValue = $poolAccess ? 1 : 0;
+    $lavaMassageValue = $lavaMassage ? 1 : 0;
+    $fullName = "$firstname $lastname";
+    var_dump($totalcosttot);
+    var_dump($totalcosttot);
+
+    $stmt->bindParam(':start_date', $startDate);
+    $stmt->bindParam(':end_date', $endDate);
+    $stmt->bindParam(':full_name', $fullName);
+    $stmt->bindParam(':pool_access', $poolAccessValue);
+    $stmt->bindParam(':lava_massage', $lavaMassageValue);
+    $stmt->bindParam(':total_cost', $totalcosttot);
+    $stmt->bindParam(':room_id', $roomNumber);
+    // Bind other parameters as needed
+    echo "SQL Query: " . $stmt->queryString;
+    $stmt->execute();
+}
+
 
 /* ---------------------------------------------------- GUID ----------------------------------------> */
 function guidv4(string $data = null): string
@@ -76,7 +121,7 @@ function isValidUuid(string $uuid): bool
 
 /* --------------------------------------------- PHP BOOKING FUNCTIONS ------------------> */
 
-function sanitizeAndSend(?string $date): ?string
+function sanitizeAndFormat(?string $date): ?array
 {
     if ($date === null) {
         return null;
@@ -85,27 +130,28 @@ function sanitizeAndSend(?string $date): ?string
     $sanitizedDate = htmlspecialchars(trim($date));
     list($startDate, $endDate) = explode(' - ', $sanitizedDate);
 
-    // gör om till DateTime för att kunna räkna tid mellan dagarna.
-    $startDateTime = new DateTime($startDate);
-    $endDateTime = new DateTime($endDate);
+    // Convert to DateTime objects
+    $startDateObj = DateTime::createFromFormat('m/d/Y', $startDate);
+    $endDateObj = DateTime::createFromFormat('m/d/Y', $endDate);
 
-    // Gör om till midnatt.
-    $startDateTime->setTime(0, 0, 0);
-    $endDateTime->setTime(0, 0, 0);
-    // Calculate the difference in days
-    $dateDiff = $startDateTime->diff($endDateTime);
-    $daysDifference = $dateDiff->days + 1;
+    // Format the dates as 'YYYY-MM-DD'
+    $formattedStartDate = $startDateObj->format('Y-m-d');
+    $formattedEndDate = $endDateObj->format('Y-m-d');
 
-    // Echoa ut skillnaden i dagar.
-    //echo "Difference in Days: $daysDifference";
-    // Returna värdet.
-    echo $startDate;
-    echo $endDate;
-    return $daysDifference;
+    // Return an array of start and end dates
+    return ['start' => $formattedStartDate, 'end' => $formattedEndDate];
+}
+
+
+function sanitizeName(string $name): string
+{
+    $sanitizedname = htmlspecialchars(trim($name));
+    return $sanitizedname;
 }
 
 // Efter POST från room-sida. \/
 // Function to calculate total cost
+// !!!!!!!!!!!!!KANSKE TA BORT DENNA?!!!!!!!!!!
 function calculateTotalCost($baseCostPerDay, $days, $additionalItems) {
     $costPerAdditionalItem = 3;
   
@@ -115,22 +161,4 @@ function calculateTotalCost($baseCostPerDay, $days, $additionalItems) {
     return $totalCost;
 }
 
-// Retrieve and sanitize other form data
-// ...
-
-// Retrieve selected checkboxes for extra features
-$extraFeature = isset($_POST['extraFeature']) ? $_POST['extraFeature'] : 0;
-$extraFeature2 = isset($_POST['extraFeature2']) ? $_POST['extraFeature2'] : 0;
-
-// Base cost per day (you may get this value from your database or set it as needed)
-$baseCostPerDay = 15;
-
-// Calculate the total number of days (you need to implement this part based on your logic)
-$days = 3; // Replace with the actual number of days selected by the user
-
-// Calculate the total cost including extra features
-$totalCost = calculateTotalCost($baseCostPerDay, $days, $extraFeature + $extraFeature2);
-
-// Use $totalCost as needed, e.g., store in the database or display to the user
-/* echo "Total Cost: $" . $totalCost; */
 ?>
