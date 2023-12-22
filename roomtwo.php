@@ -18,18 +18,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $transfercode = $_POST['transfercode'];
         $roomNumber = 2;
 
-        if ($dates !== null) {
-            // Check if the checkboxes are checked
-            $poolAccess = isset($_POST['poolAccess']);
-            $lavaMassage = isset($_POST['lavaMassage']);
-
-            if (isAvailable($db, $startDate, $endDate)) {
-                // Dates are available, proceed with the booking
-                insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber);
-                echo "Booking successful!";
+        if (isValidUuid($transfercode)) {
+            // Transfer code is properly structured, proceed with checking
+            if (checkTransferCode($transfercode, $totalcosttot)) {
+                // Transfer code is valid, proceed with the booking
+                echo "Transfer code is valid!\n";
+                if (depositIntoBankAccount($transfercode)) {
+                // Deposition okay, money is now in the bank!
+                // Proceed with booking!
+                echo "Money is now in the bank";
+                    if ($dates !== null) {
+                        // Check if the checkboxes are checked
+                        $poolAccess = isset($_POST['poolAccess']);
+                        $lavaMassage = isset($_POST['lavaMassage']);
+        
+                        if (isAvailable($db, $startDate, $endDate)) {
+                            // Dates are available, proceed with the booking
+                            insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber);
+                            echo "Booking successful!\n";
+                            // createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber);
+                        } else {
+                            // Dates are not available
+                            echo "Selected dates are not available. Please choose different dates.\n";
+                        }
+                    }
+                } else {
+                    echo "Money could not be wired to the bank. Please try again!";
+                }
             } else {
-                // Dates are not available
-                echo "Selected dates are not available. Please choose different dates.";
+                // Transfer code is not valid
+                echo "Invalid transfer code. Please provide a valid transfer code.";
             }
         }
     }

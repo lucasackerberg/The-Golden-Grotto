@@ -1,4 +1,6 @@
 <?php
+require __DIR__ . '/vendor/autoload.php';
+use GuzzleHttp\Client;
 
 /* 
 Here's something to start your career as a hotel manager.
@@ -53,7 +55,6 @@ function getBookedDatesforCasualroom(PDO $db): array
 
 function isAvailable($db, $startDate, $endDate) {
     // Perform a database query to check availability
-    // You'll need to customize this query based on your database schema
     $query = "SELECT COUNT(*) FROM bookings 
               WHERE (checkin_date < :end_date AND checkout_date > :start_date)";
     $stmt = $db->prepare($query);
@@ -65,12 +66,10 @@ function isAvailable($db, $startDate, $endDate) {
     return $count === 0; // If count is 0, dates are available
 }
 
-// hotelFunctions.php
 
 function insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber) {
     var_dump($totalcosttot);
     // Perform a database query to insert the booking
-    // Customize this query based on your database schema
     $query = "INSERT INTO bookings (checkin_date, checkout_date, booked_by, poolaccess, lavamassage, total_cost, room_id)
               VALUES (:start_date, :end_date, :full_name, :pool_access, :lava_massage, :total_cost, :room_id)";
     $stmt = $db->prepare($query);
@@ -79,8 +78,6 @@ function insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAc
     $poolAccessValue = $poolAccess ? 1 : 0;
     $lavaMassageValue = $lavaMassage ? 1 : 0;
     $fullName = "$firstname $lastname";
-    var_dump($totalcosttot);
-    var_dump($totalcosttot);
 
     $stmt->bindParam(':start_date', $startDate);
     $stmt->bindParam(':end_date', $endDate);
@@ -89,8 +86,8 @@ function insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAc
     $stmt->bindParam(':lava_massage', $lavaMassageValue);
     $stmt->bindParam(':total_cost', $totalcosttot);
     $stmt->bindParam(':room_id', $roomNumber);
-    // Bind other parameters as needed
-    echo "SQL Query: " . $stmt->queryString;
+    // Kolla varför totalcost inte hänger med.
+    //echo "SQL Query: " . $stmt->queryString;
     $stmt->execute();
 }
 
@@ -118,6 +115,77 @@ function isValidUuid(string $uuid): bool
     }
     return true;
 }
+
+/* ----------------------------------------- GUZZLE ENDPOINT FUNCTIONS ------------------------- */
+
+function checkTransferCode($transfercode, $totalcosttot)
+{
+    // Create a Guzzle client instance
+    $client = new Client();
+
+    try {
+        // Guzzle request
+        $response = $client->request('POST', 'https://www.yrgopelag.se/centralbank/transferCode', [
+            'form_params' => [
+                'transferCode' => $transfercode,
+                'totalcost' => $totalcosttot
+            ],
+        ]);
+
+        // Handle the response if it was successful
+        $statusCode = $response->getStatusCode();
+        $body = $response->getBody()->getContents();
+
+        // Log API response
+        $responseData = json_decode($body, true);
+
+        // Access the transfer code, fromAccount, and amount
+        $transferCode = $responseData['transferCode'];
+        $fromAccount = $responseData['fromAccount'];
+        $amount = $responseData['amount'];
+
+        // Output the values
+        /* echo $transferCode . "\n";
+        echo $fromAccount . "\n";
+        echo $amount . "\n"; */
+        return true;
+
+    } catch (\Exception $e) {
+        // Error logga om något gick fel.
+        error_log('Error: ' . $e->getMessage());
+    }
+}
+
+function depositIntoBankAccount($transfercode)
+{
+    // Create a Guzzle client instance
+    $client = new Client();
+
+    try {
+        // Guzzle request
+        $response = $client->request('POST', 'https://www.yrgopelag.se/centralbank/deposit', [
+            'form_params' => [
+                'user' => 'Lucas',
+                'transferCode' => $transfercode
+            ],
+        ]);
+
+        // Handle the response if it was successful
+        $statusCode = $response->getStatusCode();
+        $body = $response->getBody()->getContents();
+
+        // Log API response
+        $responseData = json_decode($body, true);
+        $successMessageFromBank = $responseData['message'];
+        echo $successMessageFromBank . "\n";
+        return true;
+
+    } catch (\Exception $e) {
+        // Error logga om något gick fel.
+        error_log('Error: ' . $e->getMessage());
+    }
+}
+
 
 /* --------------------------------------------- PHP BOOKING FUNCTIONS ------------------> */
 
@@ -149,16 +217,47 @@ function sanitizeName(string $name): string
     return $sanitizedname;
 }
 
-// Efter POST från room-sida. \/
-// Function to calculate total cost
-// !!!!!!!!!!!!!KANSKE TA BORT DENNA?!!!!!!!!!!
-function calculateTotalCost($baseCostPerDay, $days, $additionalItems) {
-    $costPerAdditionalItem = 3;
-  
-    // Calculate the total cost
-    $totalCost = ($days * $baseCostPerDay) + ($additionalItems * $costPerAdditionalItem);
-  
-    return $totalCost;
+// Booking JSON Response
+function createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber)
+{
+    $features = [];
+
+    // Check if features are checked in the booking.
+    if ($poolAccess) {
+        $features[] = [
+            "name" => "poolAccess",
+            "cost" => 3
+        ];
+    }
+
+    if ($lavaMassage) {
+        $features[] = [
+            "name" => "lavamassage",
+            "cost" => 3
+        ];
+    }
+
+    $bookingResponse = [
+        "island" => "Glimmering Bay",
+        "hotel" => "The Golden Grotto",
+        "arrival_date" => $startDate,
+        "departure_date" => $endDate,
+        "total_cost" => $totalcosttot,
+        "stars" => "3",
+        "features" => $features,
+        "additional_info" => [
+            "greeting" => "Thank you for choosing The Golden Grotto",
+            "imageUrl" => "https://upload.wikimedia.org/wikipedia/commons/e/e2/Hotel_Boscolo_Exedra_Nice.jpg"
+        ]
+    ];
+
+    // Convert the array to JSON format
+    $bookingResponseJson = json_encode($bookingResponse);
+
+    // Send the JSON response to the client
+    header('Content-Type: application/json');
+    echo $bookingResponseJson;
 }
+
 
 ?>
