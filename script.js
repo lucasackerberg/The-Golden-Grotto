@@ -40,7 +40,7 @@ $('#demo').daterangepicker({
 });
 // Change from text to a float to use in the function beneath.
 var basePriceText = $("#basePrice").text();
-var basePrice = parseFloat(basePriceText.replace('$', ''));
+var basePrice = parseFloat(basePriceText);
 
 $('#demo').on('apply.daterangepicker', function(ev, picker) {
   let totaldays = picker.endDate.diff(picker.startDate, 'days') +1;
@@ -58,6 +58,33 @@ $('#demo').on('apply.daterangepicker', function(ev, picker) {
   totalCostParent.innerHTML = '<h3 id="totalcosth3">Your total cost would be: $' + totalprice + '</h3>';
   $('#totalCostInput').val(totalprice);
 });
+
+function handleMassageCheckbox() {
+  const massageImage = document.getElementById("massageImage");
+  const poolImage = document.getElementById("poolImage");
+  const massageCheckmarkImg = document.getElementById("massageCheckmarkImg");
+  const poolCheckmarkImg = document.getElementById("poolCheckmarkImg");
+
+  if (massageCheckbox.checked) {
+    // Add the 'checked' class when checkbox is checked
+    massageImage.classList.add("checked");
+    massageCheckmarkImg.style.opacity = 1;
+  } else {
+    // Remove the 'checked' class when checkbox is unchecked
+    massageImage.classList.remove("checked");
+    massageCheckmarkImg.style.opacity = 0;
+  }
+
+  if (poolCheckbox.checked) {
+    // Add
+    poolImage.classList.add("checked");
+    poolCheckmarkImg.style.opacity = 1;
+  } else {
+    // Remove
+    poolImage.classList.remove("checked");
+    poolCheckmarkImg.style.opacity = 0;
+  }
+}
 
 var swiper = new Swiper(".mySwiper", {
   navigation: {

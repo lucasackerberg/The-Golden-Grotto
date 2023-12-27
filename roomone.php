@@ -93,14 +93,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
         </div>
+        <div class="transitiondiv"></div>
         <div class="bookingWrapper">
             <div class="bookingInformation" id="bookingInformation">
-                <p>Cost per day is <span id="basePrice"class="goldenspan">15</span> $ for this room.</p>
+                <div class="massageroom">
+                    <div class="massagebox">
+                        <img src="assets/images/massageroom.jpg" alt="" class="massage-image" id="massageImage">
+                        <img src="assets/images/checkmark.png" class="massageCheckmarkImg hiddenCheckmark" id="massageCheckmarkImg" alt="">
+                    </div>
+                    <div class="poolbox">
+                        <img src="assets/images/poolarea1.jpg" alt="" class="pool-image" id="poolImage">
+                        <img src="assets/images/checkmark.png" alt="" class="poolCheckmarkImg hiddenCheckmark" id="poolCheckmarkImg">
+                    </div>
+                </div>
                 <!-- lägg till genom js -->
+                <p class="costperday">Cost per day is <span id="basePrice"class="goldenspan">15</span> $ for this room.</p>
             </div>
             <form class="formWrapper" action="roomone.php" method="POST">
-                <input id="massageCheckbox" name="lavaMassage" type="checkbox" value="3"> <p>Lava massage 3$ USD</p>
-                <input id="poolCheckbox" name="poolAccess" type="checkbox" value="3"> <p>Pool access: 3$ USD</p>
+                <input id="massageCheckbox" name="lavaMassage" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Lava massage 3$ USD</p>
+                <input id="poolCheckbox" name="poolAccess" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Pool access: 3$ USD</p>
                 <input type="hidden" id="totalCostInput" name="totalCost" value="">
                 <div class="datepickerWrapper">
                     <i class="fa-solid fa-calendar"></i>

@@ -139,6 +139,11 @@ nav span a {
     height: 50px;
 }
 
+.transitiondiv{
+    width: 100%;
+    height: 50px;
+}
+
 .datepickerWrapper{
     display: flex;
     align-items: center;
@@ -534,4 +539,62 @@ footer .c-2 {
 }
 footer .footer_copyright {
   color: var(--light);
+}
+
+.massageroom{
+    display: flex;
+    flex-direction: column;
+    height: 560px;
+    width: 100%;
+}
+
+.costperday{
+    padding-top: 60px;
+}
+
+.pool-image, .massage-image{
+    height:280px;
+    width: 280px;
+}
+
+.massagebox{
+    position: relative;
+}
+
+.massage-image {
+    /* Set initial opacity without checkbox checked */
+    opacity: 1;
+}
+  
+.massage-image.checked {
+    /* Set opacity when checkbox is checked */
+    opacity: 0.6;
+}
+
+.poolbox{
+    position: relative;
+}
+
+.pool-image {
+    /* Set initial opacity without checkbox checked */
+    opacity: 1;
+    position: relative;
+}
+  
+.pool-image.checked {
+    /* Set opacity when checkbox is checked */
+    opacity: 0.6;
+}
+
+.massageCheckmarkImg, .poolCheckmarkImg{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100px;
+    height: 100px;
+}
+
+.hiddenCheckmark{
+    opacity:0;
 }
