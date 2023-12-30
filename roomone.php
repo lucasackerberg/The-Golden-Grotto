@@ -82,8 +82,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="wrapper">
         <div class="picsAndInfo">
             <div class="infoColumn">
-                <h3>Hotel room</h3>
-                <p>blabkabkan</p>
+                <h3>Golden Oasis Suite</h3>
+                <p class="upper">
+                    Immerse yourself in opulence with our Golden Oasis Suite. 
+                    This room is a true sanctuary of luxury, featuring lavish decor, golden accents, and an ambiance that exudes regality.
+                    The Golden Oasis Suite is designed for those who appreciate the finer things in life. Indulge in a royal experience with personalized service and unmatched comfort.
+        
+                </p>
+                <p class="lower">
+                    Starting Price is <span class="biggertextforinfo">$15</span> per night <br><br>
+                    Our <span class="biggertextforinfo">Features</span> are: <br><br>
+                    <span class="biggertextforinfo">King-sized</span> bed with premium linens <br><br>
+                    Private <span class="biggertextforinfo">Terrace</span> overlooking the shore and the cave-island. <br><br>
+                    <span class="biggertextforinfo">Jacuzzi</span> and spa-like bathroom <br><br>
+                    <span class="biggertextforinfo">24/7</span> Concierge Service <br><br>
+                    See our other addons at the <span class="biggertextforinfo"><a href="/activities">Activities</a></span> page!
+                </p>
             </div>
             <div class="picColumn">
                 <div class="roompic"></div>
@@ -107,11 +121,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <!-- lägg till genom js -->
-                <p class="costperday">Cost per day is <span id="basePrice"class="goldenspan">15</span> $ for this room.</p>
+                <!-- <p class="costperday">Cost per day is <span id="basePrice"class="goldenspan">15</span> $ for this room.</p> -->
             </div>
             <form class="formWrapper" action="roomone.php" method="POST">
-                <input id="massageCheckbox" name="lavaMassage" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Lava massage 3$ USD</p>
-                <input id="poolCheckbox" name="poolAccess" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Pool access: 3$ USD</p>
+                <article class="lavaMassage">
+                    <input id="massageCheckbox" name="lavaMassage" type="checkbox" value="3" onchange="handleMassageCheckbox()">
+                        <div>
+                            <span>
+                            Lava Massage<br/>
+                            <span class="biggertextforinfo">+ $3.00</span>
+                            </span>
+                        </div>
+                </article>
+                <article class="lavaMassage">
+                <input id="poolCheckbox" name="poolAccess" type="checkbox" value="3" onchange="handleMassageCheckbox()">
+                        <div>
+                            <span>
+                            Pool Access<br/>
+                            <span class="biggertextforinfo">+ $3.00</span>
+                            </span>
+                        </div>
+                </article>
                 <input type="hidden" id="totalCostInput" name="totalCost" value="">
                 <div class="datepickerWrapper">
                     <i class="fa-solid fa-calendar"></i>
