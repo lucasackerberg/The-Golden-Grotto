@@ -23,7 +23,7 @@ require(__DIR__ . '/hotelFunctions.php');
             <ul class="nav-list">
                 <li><a href="index.php">HOME</a></li>
                 <li><a href="index.php">ABOUT US</a></li>
-                <li><a href="index.php">ROOMS</a></li>
+                <li><a href="#section-id">ROOMS</a></li>
                 <li><a href="activities.php">ACTIVITIES</a></li>
             </ul>   
         </div>
@@ -33,44 +33,46 @@ require(__DIR__ . '/hotelFunctions.php');
             <div class="heroimg">
                 <div class="welcome">
                     <h3>Welcome to <span class="goldenspan">The Golden Grotto</span></h3>
-                    <p>This hotel is designed to make you leave all your worries blablabla.</p>
+                    <p>Experience the Luxury of Radiance at Golden Grotto Cave Hotel – Where Every Moment Glistens with Golden Splendor!</p>
                 </div>
             </div>
         </div>
         <div class="transition"></div>
-        <div class="roomwrapper">
-            <!-- Swiper -->
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <img src="assets/images/luxury-grotto.jpg" alt="">
-                        <div class="info">
-                            <h3>Golden Oasis Suite</h3>
-                            <p>The Golden Oasis Suite is a luxurious escape from reality. <br> Starting at <span class="bigger">15$</span> per night</p>
-                            <a href="roomone.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
+        <section id="section-id">
+            <div class="roomwrapper">
+                <!-- Swiper -->
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="assets/images/luxury-grotto.jpg" alt="">
+                            <div class="info">
+                                <h3>Golden Oasis Suite</h3>
+                                <p>The Golden Oasis Suite is a luxurious escape from reality. <br> Starting at <span class="bigger">15$</span> per night</p>
+                                <a href="roomone.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="assets/images/medium-grotto.jpg" alt="">
+                            <div class="info">
+                                <h3>Gilded Grotto Retreat</h3>
+                                <p>The Gilded Grotto Retreat is a premier comfort experience. <br> Starting at <span class="bigger">10$</span> per night</p>
+                                <a href="roomtwo.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
+                            </div>
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="assets/images/simple-grotto.jpg" alt="">
+                            <div class="info">
+                                <h3>Sunlit Aurum Chamber</h3>
+                                <p>The Sunlit Aurum Chamber is classic elegance room. <br> Starting at <span class="bigger">7$</span> per night</p>
+                                <a href="roomthree.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
+                            </div>
                         </div>
                     </div>
-                    <div class="swiper-slide">
-                        <img src="assets/images/medium-grotto.jpg" alt="">
-                        <div class="info">
-                            <h3>Gilded Grotto Retreat</h3>
-                            <p>The Gilded Grotto Retreat is a premier comfort experience. <br> Starting at <span class="bigger">10$</span> per night</p>
-                            <a href="roomtwo.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="assets/images/simple-grotto.jpg" alt="">
-                        <div class="info">
-                            <h3>Sunlit Aurum Chamber</h3>
-                            <p>The Sunlit Aurum Chamber is classic elegance room. <br> Starting at <span class="bigger">7$</span> per night</p>
-                            <a href="roomthree.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
-                        </div>
-                    </div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
                 </div>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
             </div>
-        </div>
+        </section>
         <div class="activities">
         </div>
         <div class="transitiondiv"></div>

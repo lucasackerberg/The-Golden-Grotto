@@ -673,3 +673,31 @@ input[type=checkbox]:checked ~ div {
     background-color: #ffb700;
     color:#131717;
   }
+
+  .activities{
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+  }
+
+  .lavamassageActivities{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .lavamassageActivities img{
+    width: 40%;
+  }
+
+  .poolareaActivities{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+
+  .poolareaActivities img{
+    width: 40%;
+  }
