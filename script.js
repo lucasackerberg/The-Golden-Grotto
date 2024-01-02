@@ -3,6 +3,7 @@ const priceForMassage = 3;
 const totalCostParent = document.getElementById("bookingInformation");
 const poolCheckbox = document.getElementById("poolCheckbox");
 const massageCheckbox = document.getElementById("massageCheckbox");
+const jsvar = 0;
 
 $('#demo').daterangepicker({
   parentEl: "formWrapper",
@@ -86,6 +87,21 @@ function handleMassageCheckbox() {
   }
 }
 
+function showPopup(discountCode) {
+  document.getElementById('discountCode').innerText = discountCode;
+  document.getElementById('overlay').style.display = 'block';
+  document.getElementById('discountPopup').style.display = 'block';
+}
+
+function closePopup() {
+  document.getElementById('overlay').style.display = 'none';
+  document.getElementById('discountPopup').style.display = 'none';
+}
+
+if (jsvar == 1) {
+  showPopup(discountCode);
+}
+
 var swiper = new Swiper(".mySwiper", {
   navigation: {
     nextEl: ".swiper-button-next",
@@ -93,12 +109,15 @@ var swiper = new Swiper(".mySwiper", {
   },
 });
 
-document.querySelectorAll('a[href^="#section-id"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
+document.addEventListener('DOMContentLoaded', function () {
+  const targetSection = window.location.hash.substring(1);
+  const targetElement = document.getElementById(targetSection);
 
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
+  if (targetElement) {
+    targetElement.scrollIntoView({
+      behavior: 'smooth',
+      inline: 'nearest',
+      marginBottom: 30
     });
-  });
+  }
 });

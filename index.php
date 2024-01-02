@@ -22,8 +22,8 @@ require(__DIR__ . '/hotelFunctions.php');
         <div class="navlista">
             <ul class="nav-list">
                 <li><a href="index.php">HOME</a></li>
-                <li><a href="index.php">ABOUT US</a></li>
-                <li><a href="#section-id">ROOMS</a></li>
+                <li><a href="aboutus.php">ABOUT US</a></li>
+                <li><a href="/index.php#room-section">ROOMS</a></li>
                 <li><a href="activities.php">ACTIVITIES</a></li>
             </ul>   
         </div>
@@ -38,7 +38,7 @@ require(__DIR__ . '/hotelFunctions.php');
             </div>
         </div>
         <div class="transition"></div>
-        <section id="section-id">
+        <section id="room-section">
             <div class="roomwrapper">
                 <!-- Swiper -->
                 <div class="swiper mySwiper">
@@ -85,7 +85,7 @@ require(__DIR__ . '/hotelFunctions.php');
                     <div class="layout">
                     <div class="layout_item w-50">
                         <div class="newsletter">
-                        <h3 class="newsletter_title">Get updates on fun stuff you probably want to know about in your inbox.</h3>
+                        <h3 class="newsletter_title">Get a 20% discount when registering your email to our newsletter!</h3>
                         <form action="">
                             <input type="text" placeholder="Email Address">
                             <button>
@@ -103,16 +103,13 @@ require(__DIR__ . '/hotelFunctions.php');
                         <h4 class="c-nav-tool_title">Menu</h4>
                         <ul class="c-nav-tool_list">
                             <li>
-                                <a href="/collections/all" class="c-link">Shop All</a>
+                                <a href="/index.php#room-section" class="c-link">Our Rooms</a>
                             </li>
                             <li>
-                                <a href="/pages/about-us" class="c-link">About Us</a>
+                                <a href="/about-us" class="c-link">About Us</a>
                             </li>
                             <li>
-                                <a href="/blogs/community" class="c-link">Community</a>
-                            </li>
-                            <li>
-                                <a href="#" class="c-link">Vibes</a>
+                                <a href="/blogs/community" class="c-link">Activities</a>
                             </li>
                         </ul>
                         </nav>
@@ -122,16 +119,7 @@ require(__DIR__ . '/hotelFunctions.php');
                             <h4 class="c-nav-tool_title">Support</h4>
                                 <ul class="c-nav-tool_list">
                                     <li class="c-nav-tool_item">
-                                        <a href="/pages/shipping-returns" class="c-link">Shipping &amp; Returns</a>
-                                    </li>
-                                    <li class="c-nav-tool_item">
                                         <a href="/pages/help" class="c-link">Help &amp; FAQ</a>
-                                    </li>
-                                    <li class="c-nav-tool_item">
-                                        <a href="/pages/terms-conditions" class="c-link">Terms &amp; Conditions</a>
-                                    </li>
-                                    <li class="c-nav-tool_item">
-                                        <a href="/pages/privacy-policy" class="c-link">Privacy Policy</a>
                                     </li>
                                 </ul>
                             </nav>

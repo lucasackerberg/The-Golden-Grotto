@@ -91,6 +91,50 @@ function insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAc
     $stmt->execute();
 }
 
+function insertEmail($db, $email) {
+    // Perform a database query to insert the email
+    $query = "INSERT INTO emails (email) VALUES (:email)";
+    $stmt = $db->prepare($query);
+
+    // Bind the email parameter
+    $stmt->bindParam(':email', $email);
+
+    // Execute the query
+    $stmt->execute();
+    return true;
+}
+
+function emailExists($db, $email) {
+    // Check if the email already exists in the emails table
+    $query = "SELECT COUNT(*) FROM emails WHERE email = :email";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+
+    // Fetch the result
+    $count = $stmt->fetchColumn();
+    return $count > 0;
+}
+
+function generateDiscountCode($db) {
+    // Select a random discount code from the discounts table
+    $query = "SELECT code FROM discounts ORDER BY RANDOM() LIMIT 1";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    // Fetch the result
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Check if a discount code is retrieved
+    if ($result && isset($result['code'])) {
+        return $result['code'];
+    } else {
+        // Default discount code if none is found
+        return "DEFAULTCODE";
+    }
+}
+
+
 
 /* ---------------------------------------------------- GUID ----------------------------------------> */
 function guidv4(string $data = null): string
@@ -215,6 +259,24 @@ function sanitizeName(string $name): string
 {
     $sanitizedname = htmlspecialchars(trim($name));
     return $sanitizedname;
+}
+
+function sanitizeEmail(string $email): string {
+    if ($email === null) {
+        return null;
+    }
+
+    // Trim leading and trailing whitespaces
+    $trimmedEmail = trim($email);
+
+    // Validate the email format
+    if (filter_var($trimmedEmail, FILTER_VALIDATE_EMAIL)) {
+        // Return the sanitized email
+        return $trimmedEmail;
+    } else {
+        // Invalid email format
+        return null;
+    }
 }
 
 // Booking JSON Response

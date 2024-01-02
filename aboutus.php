@@ -2,59 +2,6 @@
 /* php stuff */
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/hotelFunctions.php');
-/* var_dump(getBookedDates($db)); */ 
-// roomone.php
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if the form has been submitted
-    if (isset($_POST['dates'], $_POST['firstname'], $_POST['lastname'], $_POST['transfercode'], $_POST['totalCost'])) {
-        $dates = sanitizeAndFormat($_POST['dates']);
-        $startDate = $dates['start'];
-        $endDate = $dates['end'];
-        $firstname = sanitizename($_POST['firstname']);
-        $lastname = sanitizename($_POST['lastname']);
-        $totalcosttot = $_POST['totalCost'];
-        $totalcosttot = intval($totalcosttot);
-        $transfercode = $_POST['transfercode'];
-        $roomNumber = 2;
-
-        if (isValidUuid($transfercode)) {
-            // Transfer code is properly structured, proceed with checking
-            if (checkTransferCode($transfercode, $totalcosttot)) {
-                // Transfer code is valid, proceed with the booking
-                echo "Transfer code is valid!\n";
-                if (depositIntoBankAccount($transfercode)) {
-                // Deposition okay, money is now in the bank!
-                // Proceed with booking!
-                echo "Money is now in the bank";
-                    if ($dates !== null) {
-                        // Check if the checkboxes are checked
-                        $poolAccess = isset($_POST['poolAccess']);
-                        $lavaMassage = isset($_POST['lavaMassage']);
-        
-                        if (isAvailable($db, $startDate, $endDate)) {
-                            // Dates are available, proceed with the booking
-                            insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber);
-                            echo "Booking successful!\n";
-                            // createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber);
-                        } else {
-                            // Dates are not available
-                            echo "Selected dates are not available. Please choose different dates.\n";
-                        }
-                    }
-                } else {
-                    echo "Money could not be wired to the bank. Please try again!";
-                }
-            } else {
-                // Transfer code is not valid
-                echo "Invalid transfer code. Please provide a valid transfer code.";
-            }
-        }
-    }
-}
-
-// ... other code ...
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,55 +28,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </ul>   
         </div>
     </nav>
-    <div class="wrapper">
-        <div class="picsAndInfo">
-            <div class="infoColumn">
-                <h3>Hotel room</h3>
-                <p>blabkabkan</p>
-            </div>
-            <div class="picColumn">
-                <div class="roompicmedium"></div>
-                <div class="sectionTwo">
-                    <div class="bathroompicmedium"></div>
-                    <div class="outsidepicmedium"></div>
-                </div>
-            </div>
-        </div>
-        <div class="transitiondiv"></div>
-        <div class="bookingWrapper">
-            <div class="bookingInformation" id="bookingInformation">
-                <div class="massageroom">
-                    <div class="massagebox">
-                        <img src="assets/images/massageroom.jpg" alt="" class="massage-image" id="massageImage">
-                        <img src="assets/images/checkmark.png" class="massageCheckmarkImg hiddenCheckmark" id="massageCheckmarkImg" alt="">
-                    </div>
-                    <div class="poolbox">
-                        <img src="assets/images/poolarea1.jpg" alt="" class="pool-image" id="poolImage">
-                        <img src="assets/images/checkmark.png" alt="" class="poolCheckmarkImg hiddenCheckmark" id="poolCheckmarkImg">
-                    </div>
-                </div>
-                <!-- lägg till genom js -->
-                <p class="costperday">Cost per day is <span id="basePrice"class="goldenspan">15</span> $ for this room.</p>
-            </div>
-            <form class="formWrapper" action="roomtwo.php" method="POST">
-                <input id="massageCheckbox" name="lavaMassage" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Lava massage 3$ USD</p>
-                <input id="poolCheckbox" name="poolAccess" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Pool access: 3$ USD</p>
-                <input type="hidden" id="totalCostInput" name="totalCost" value="">
-                <div class="datepickerWrapper">
-                    <i class="fa-solid fa-calendar"></i>
-                    <input class="datepicker" type="text" id="demo" name="dates">
-                    <i class="fa-solid fa-caret-down"></i>
-                </div>
-                <div class="transfercode">
-                    <input type="text" class="transfercodeinput" placeholder="Please enter your first name!" name="firstname">
-                    <input type="text" class="transfercodeinput" placeholder="Please enter your last name!" name="lastname">
-                    <input class="transfercodeinput" type="text" name="transfercode" placeholder="Write your transfercode here!">
-                    <button>Book</button>
-                </div>
-            </form>
-        </div>
-        <div class="transitiondiv"></div>
-        <footer class="footer">
+    <div class="wrapper"></div>
+    <div class="transitiondiv"></div>
+    <div class="aboutUs">
+        <h2><span class="goldenspan">Our Mission</span></h2>
+        <p>At Golden Grotto Hotel, our mission is to provide an unparalleled experience of luxury and relaxation. 
+            We strive to create a haven of comfort and sophistication, offering our guests a memorable stay amidst the enchanting beauty of our gilded retreat. 
+            Our commitment is to exceed expectations, ensuring every moment with us is filled with warmth, elegance, and golden memories.</p>
+
+        <h2><span class="goldenspan">Our History</span></h2>
+        <p>Established with a vision of blending opulence with nature's wonders, Golden Grotto Hotel has a rich history of enchanting travelers from around the world. 
+            From our humble beginnings, we have evolved into a symbol of refined hospitality. 
+            Each chapter of our history is marked by the dedication to creating an oasis of serenity, where guests can escape the ordinary and embrace the extraordinary.</p>
+
+        <h2><span class="goldenspan">Our Team</span></h2>
+        <p>Meet the passionate individuals behind the Golden Grotto experience. 
+            Our team is comprised of seasoned professionals who share a love for hospitality and a commitment to making your stay exceptional. 
+            From the concierge to the culinary artists, every member contributes to the seamless orchestration of your Golden Grotto journey. 
+            Together, we take pride in curating moments that linger in your heart long after you depart.</p>
+    </div>
+    <div class="transitiondiv"></div>
+    <footer class="footer">
             <video class="footer_video" muted="" loop="" autoplay src="assets/videos/footerbackground2.mp4" type="video/mp4">
             </video>
             <div class="container">
@@ -140,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <div class="newsletter">
                         <h3 class="newsletter_title">Get a 20% discount when registering your email to our newsletter!</h3>
                         <form action="">
-                            <input type="text" placeholder="Email Address">
+                            <input type="text" placeholder="Email Address" name="emailAdress">
                             <button>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                                 <path fill="none" d="M0 0h24v24H0z" />
@@ -256,7 +175,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </footer>
     </div>
-    <script> const bookedDates = <?php echo json_encode($bookedDatesforMediumroom); ?>; </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

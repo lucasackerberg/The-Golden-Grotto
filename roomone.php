@@ -2,11 +2,42 @@
 /* php stuff */
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/hotelFunctions.php');
+$jsvar = 0;
 /* var_dump(getBookedDates($db)); */ 
 // roomone.php
 
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if the form has been submitted
+    // Check if one of the forms has been submitted
+    if (isset($_POST['emailAdress'])) {
+        $email = $_POST['emailAdress'];
+        $sanitizedEmail = sanitizeEmail($email);
+
+        if ($sanitizedEmail !== null) {
+            // Use $sanitizedEmail safely
+            /* echo "Sanitized Email: " . $sanitizedEmail; */
+
+            if (emailExists($db, $sanitizedEmail)) {
+                // Email already exists, handle accordingly
+                echo "Email already exists!";
+            } else {
+                // Generate a discount code (you can modify this part)
+                $discountCode = generateDiscountCode($db);
+
+                // Insert the email
+                if (insertEmail($db, $sanitizedEmail)) {
+                    // Show the popup with the discount code only if email insertion was successful
+                    $jsvar = 1;
+                } else {
+                    // Handle email insertion failure
+                    echo "Failed to insert email.";
+                }
+            }
+        } else {
+            // Invalid Email
+            echo "Invalid Email format";
+        }
+    }
     if (isset($_POST['dates'], $_POST['firstname'], $_POST['lastname'], $_POST['transfercode'], $_POST['totalCost'])) {
         $dates = sanitizeAndFormat($_POST['dates']);
         $startDate = $dates['start'];
@@ -73,13 +104,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="navlista">
             <ul class="nav-list">
                 <li><a href="index.php">HOME</a></li>
-                <li><a href="index.php">ABOUT US</a></li>
-                <li><a href="index.php">ROOMS</a></li>
-                <li><a href="index.php">ACTIVITIES</a></li>
+                <li><a href="aboutus.php">ABOUT US</a></li>
+                <li><a href="/index.php#room-section">ROOMS</a></li>
+                <li><a href="activities.php">ACTIVITIES</a></li>
             </ul>   
         </div>
     </nav>
     <div class="wrapper">
+        <div class="overlay" id="overlay"></div>
+        <div class="popup-container" id="discountPopup">
+            <h2>Your Discount Code</h2>
+            <p>Here is your special discount code: <span id="discountCode"></span></p>
+            <button onclick="closePopup()">Close</button>
+        </div>
         <div class="picsAndInfo">
             <div class="infoColumn">
                 <h3>Golden Oasis Suite</h3>
@@ -90,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                 </p>
                 <p class="lower">
-                    Starting Price is <span class="biggertextforinfo">$15</span> per night <br><br>
+                    Starting Price is $<span id="basePrice" class="biggertextforinfo">15</span> per night <br><br>
                     Our <span class="biggertextforinfo">Features</span> are: <br><br>
                     <span class="biggertextforinfo">King-sized</span> bed with premium linens <br><br>
                     Private <span class="biggertextforinfo">Terrace</span> overlooking the shore and the cave-island. <br><br>
@@ -121,7 +158,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <!-- lägg till genom js -->
-                <!-- <p class="costperday">Cost per day is <span id="basePrice"class="goldenspan">15</span> $ for this room.</p> -->
+                <!-- <p class="costperday">Cost per day is <span id="basePrice"class="bigger">15</span> $ for this room.</p> -->
+            </div>
+            <div class="discount">
+                <p>Please apply your discount before booking!</p>
+                <input type="text" placeholder="DISCOUNT CODE">
+                <button>Apply</button>
             </div>
             <form class="formWrapper" action="roomone.php" method="POST">
                 <article class="lavaMassage">
@@ -166,9 +208,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="layout">
                     <div class="layout_item w-50">
                         <div class="newsletter">
-                        <h3 class="newsletter_title">Get updates on fun stuff you probably want to know about in your inbox.</h3>
-                        <form action="">
-                            <input type="text" placeholder="Email Address">
+                        <h3 class="newsletter_title">Get a 20% discount when registering your email to our newsletter!</h3>
+                        <form action="roomone.php" method="POST">
+                            <input type="text" placeholder="Email Address" name=emailAdress>
                             <button>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                                 <path fill="none" d="M0 0h24v24H0z" />
@@ -184,16 +226,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <h4 class="c-nav-tool_title">Menu</h4>
                         <ul class="c-nav-tool_list">
                             <li>
-                                <a href="/collections/all" class="c-link">Shop All</a>
+                                <a href="/index.php#room-section" class="c-link">Our Rooms</a>
                             </li>
                             <li>
-                                <a href="/pages/about-us" class="c-link">About Us</a>
+                                <a href="/about-us" class="c-link">About Us</a>
                             </li>
                             <li>
-                                <a href="/blogs/community" class="c-link">Community</a>
-                            </li>
-                            <li>
-                                <a href="#" class="c-link">Vibes</a>
+                                <a href="/blogs/community" class="c-link">Activities</a>
                             </li>
                         </ul>
                         </nav>
@@ -203,16 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <h4 class="c-nav-tool_title">Support</h4>
                                 <ul class="c-nav-tool_list">
                                     <li class="c-nav-tool_item">
-                                        <a href="/pages/shipping-returns" class="c-link">Shipping &amp; Returns</a>
-                                    </li>
-                                    <li class="c-nav-tool_item">
                                         <a href="/pages/help" class="c-link">Help &amp; FAQ</a>
-                                    </li>
-                                    <li class="c-nav-tool_item">
-                                        <a href="/pages/terms-conditions" class="c-link">Terms &amp; Conditions</a>
-                                    </li>
-                                    <li class="c-nav-tool_item">
-                                        <a href="/pages/privacy-policy" class="c-link">Privacy Policy</a>
                                     </li>
                                 </ul>
                             </nav>
@@ -291,11 +321,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 </div>
                 <div class="footer_copyright">
-                    <p>&copy; 2022 The Golden Grotto Inc.</p>
+                    <p>&copy; 2022 The Afterlogo Company Inc.</p>
                 </div>
             </div>
         </footer>
     </div>
+    <?php if ($jsvar == 1): ?>
+        <script> 
+            const jsvar = 1; 
+            const discountCode = '<?php echo $discountCode; ?>'; 
+        </script>
+    <?php endif; ?>
     <script> const bookedDates = <?php echo json_encode($bookedDatesforLuxuryroom); ?>; </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

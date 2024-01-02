@@ -136,6 +136,7 @@ nav span a {
 .welcome p{
     color: whitesmoke;
     font-size: 18px;
+    font-family: 'Ibarra Real Nova';
 }
 
 .transition{
@@ -672,32 +673,142 @@ article input {
 input[type=checkbox]:checked ~ div {
     background-color: #ffb700;
     color:#131717;
-  }
+}
 
-  .activities{
+.activities{
     display: flex;
     flex-direction: column;
     gap: 100px;
-  }
+    height: 80%;
+    justify-content: center;
+    align-items: center;
+}
 
-  .lavamassageActivities{
+.lavamassageActivities{
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 60%;
+    gap: 50px;
+}
+
+.infoActivities{
     width: 100%;
-  }
+    height: 100%;
+}
 
-  .lavamassageActivities img{
+.infoActivities p{
+    height: 175px;
+    width: 300px;
+}
+
+.lavamassageActivities img{
     width: 40%;
-  }
+}
 
-  .poolareaActivities{
+.poolareaActivities{
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-  }
+    width: 60%;
+    gap: 50px;
+}
 
-  .poolareaActivities img{
+.poolareaActivities img{
     width: 40%;
-  }
+}
+
+.infoActivities h3{
+    margin: 0px;
+    color: inherit;
+    margin-block-start: 0px;
+    margin-block-end: 0px;
+}
+
+.infoActivities p{
+    font-family: 'Ibarra Real Nova';
+    color: whitesmoke;
+    line-height: 1.5;
+}
+    
+.aboutUs{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.aboutUs h2{
+    font-size: 24px;
+    font-family: "Cinzel";
+    font-weight: 600;
+}
+
+.aboutUs p{
+    font-family: 'Ibarra Real Nova';
+    width: 50%;
+}
+
+.popup-container {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background-color: var(--bluedark);
+    color: whitesmoke;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.popup-container h2{
+    font-family: "Cinzel";
+}
+
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.discount{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+}
+
+.discount input{
+    width: 225px;
+    height: 40px;
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+.discount button{
+    background-color: #ffb700;
+    border: none;
+    color:#131717;
+    padding: 8px 50px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-family: 'Cinzel';
+}
+
+.discount p{
+    font-family: 'Ibarra Real Nova';
+    font-size: 17px;
+}
