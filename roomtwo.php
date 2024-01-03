@@ -2,11 +2,42 @@
 /* php stuff */
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/hotelFunctions.php');
+$jsvar = 0;
 /* var_dump(getBookedDates($db)); */ 
 // roomone.php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if the form has been submitted
+    // Check if one of the forms has been submitted
+    if (isset($_POST['emailAdress'])) {
+        $email = $_POST['emailAdress'];
+        $sanitizedEmail = sanitizeEmail($email);
+    
+        if ($sanitizedEmail !== null) {
+            // Use $sanitizedEmail safely
+            /* echo "Sanitized Email: " . $sanitizedEmail; */
+    
+            if (emailExists($db, $sanitizedEmail)) {
+                // Email already exists, handle accordingly
+                echo "Email already exists!";
+            } else {
+                // Generate a discount code (you can modify this part)
+                $discountCode = generateDiscountCode($db);
+    
+                // Insert the email
+                if (insertEmail($db, $sanitizedEmail)) {
+                    // Show the popup with the discount code only if email insertion was successful
+                    $jsvar = 1;
+                    echo "successfull";
+                } else {
+                    // Handle email insertion failure
+                    echo "Failed to insert email.";
+                }
+            }
+        } else {
+            // Invalid Email
+            echo "Invalid Email format";
+        }
+    }
     if (isset($_POST['dates'], $_POST['firstname'], $_POST['lastname'], $_POST['transfercode'], $_POST['totalCost'])) {
         $dates = sanitizeAndFormat($_POST['dates']);
         $startDate = $dates['start'];
@@ -69,23 +100,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles.css">
     <title>The Golden Grotto</title>
 </head>
-<body>
-    <nav>
-        <span class="goldenspan"><a href="index.php"><h1>THE GOLDEN GROTTO</h1></a></span>
-        <div class="navlista">
-            <ul class="nav-list">
-                <li><a href="index.php">HOME</a></li>
-                <li><a href="aboutus.php">ABOUT US</a></li>
-                <li><a href="/index.php#room-section">ROOMS</a></li>
-                <li><a href="activities.php">ACTIVITIES</a></li>
-            </ul>   
-        </div>
-    </nav>
+    <body>
+        <nav>
+            <span class="goldenspan"><a href="index.php"><h1>THE GOLDEN GROTTO</h1></a></span>
+            <div class="navlista">
+                <ul class="nav-list">
+                    <li><a href="index.php">HOME</a></li>
+                    <li><a href="aboutus.php">ABOUT US</a></li>
+                    <li><a href="/index.php#room-section">ROOMS</a></li>
+                    <li><a href="activities.php">ACTIVITIES</a></li>
+                </ul>   
+            </div>
+        </nav>
     <div class="wrapper">
+        <div class="overlay" id="overlay"></div>
+        <div class="popup-container" id="discountPopup">
+            <h2>Your Discount Code</h2>
+            <p>Here is your special discount code: <span id="discountCode"></span></p>
+            <button onclick="closePopup()">Close</button>
+        </div>
         <div class="picsAndInfo">
             <div class="infoColumn">
-                <h3>Hotel room</h3>
-                <p>blabkabkan</p>
+                <h3>Golden Oasis Suite</h3>
+                <p class="upper">
+                    Immerse yourself in opulence with our Golden Oasis Suite. 
+                    This room is a true sanctuary of luxury, featuring lavish decor, golden accents, and an ambiance that exudes regality.
+                    The Golden Oasis Suite is designed for those who appreciate the finer things in life. Indulge in a royal experience with personalized service and unmatched comfort.
+        
+                </p>
+                <p class="lower">
+                    Starting Price is $<span id="basePrice" class="biggertextforinfo">15</span> per night <br><br>
+                    Our <span class="biggertextforinfo">Features</span> are: <br><br>
+                    <span class="biggertextforinfo">King-sized</span> bed with premium linens <br><br>
+                    Private <span class="biggertextforinfo">Terrace</span> overlooking the shore and the cave-island. <br><br>
+                    <span class="biggertextforinfo">Jacuzzi</span> and spa-like bathroom <br><br>
+                    <span class="biggertextforinfo">24/7</span> Concierge Service <br><br>
+                    See our other addons at the <span class="biggertextforinfo"><a href="/activities">Activities</a></span> page!
+                </p>
             </div>
             <div class="picColumn">
                 <div class="roompicmedium"></div>
@@ -109,11 +160,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <!-- lägg till genom js -->
-                <p class="costperday">Cost per day is <span id="basePrice"class="goldenspan">15</span> $ for this room.</p>
+                <!-- <p class="costperday">Cost per day is <span id="basePrice"class="bigger">15</span> $ for this room.</p> -->
             </div>
-            <form class="formWrapper" action="roomtwo.php" method="POST">
-                <input id="massageCheckbox" name="lavaMassage" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Lava massage 3$ USD</p>
-                <input id="poolCheckbox" name="poolAccess" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Pool access: 3$ USD</p>
+            <div class="discount">
+                <div  id="totalcostParent" class="discountedtotalcost">
+                </div>
+                <p>Please fill in your booking and then apply your discount before booking!</p>
+                <input id="discountcodeInput" type="text" placeholder="DISCOUNT CODE">
+                <button onclick="applyDiscount()">Apply</button>
+            </div>
+            <form class="formWrapper" action="roomone.php" method="POST">
+                <article class="lavaMassage">
+                    <input id="massageCheckbox" name="lavaMassage" type="checkbox" value="3" onchange="handleMassageCheckbox()">
+                        <div>
+                            <span>
+                            Lava Massage<br/>
+                            <span class="biggertextforinfo">+ $3.00</span>
+                            </span>
+                        </div>
+                </article>
+                <article class="lavaMassage">
+                <input id="poolCheckbox" name="poolAccess" type="checkbox" value="3" onchange="handleMassageCheckbox()">
+                        <div>
+                            <span>
+                            Pool Access<br/>
+                            <span class="biggertextforinfo">+ $3.00</span>
+                            </span>
+                        </div>
+                </article>
                 <input type="hidden" id="totalCostInput" name="totalCost" value="">
                 <div class="datepickerWrapper">
                     <i class="fa-solid fa-calendar"></i>
@@ -139,8 +213,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="layout_item w-50">
                         <div class="newsletter">
                         <h3 class="newsletter_title">Get a 20% discount when registering your email to our newsletter!</h3>
-                        <form action="">
-                            <input type="text" placeholder="Email Address">
+                        <form action="roomtwo.php" method="POST">
+                            <input type="text" placeholder="Email Address" name=emailAdress>
                             <button>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                                 <path fill="none" d="M0 0h24v24H0z" />
@@ -256,6 +330,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </footer>
     </div>
+    <?php if ($jsvar == 1): ?>
+        <script> 
+            const jsvar = 1; 
+            const discountCode = '<?php echo $discountCode; ?>';
+            // run discount popup
+        </script>
+    <?php endif; ?>
     <script> const bookedDates = <?php echo json_encode($bookedDatesforMediumroom); ?>; </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>

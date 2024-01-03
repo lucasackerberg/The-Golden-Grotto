@@ -811,4 +811,5 @@ input[type=checkbox]:checked ~ div {
 .discount p{
     font-family: 'Ibarra Real Nova';
     font-size: 17px;
+    width: 225px;
 }

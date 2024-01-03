@@ -1,9 +1,9 @@
 const priceForPool = 3;
 const priceForMassage = 3;
-const totalCostParent = document.getElementById("bookingInformation");
+const totalCostParent = document.getElementById("totalcostParent");
 const poolCheckbox = document.getElementById("poolCheckbox");
 const massageCheckbox = document.getElementById("massageCheckbox");
-const jsvar = 0;
+const discountCodes = 
 
 $('#demo').daterangepicker({
   parentEl: "formWrapper",
@@ -44,21 +44,43 @@ var basePriceText = $("#basePrice").text();
 var basePrice = parseFloat(basePriceText);
 
 $('#demo').on('apply.daterangepicker', function(ev, picker) {
-  let totaldays = picker.endDate.diff(picker.startDate, 'days') +1;
+  let totaldays = picker.endDate.diff(picker.startDate, 'days') + 1;
   let totalprice = basePrice * totaldays;
+
   // Check if pool checkbox is checked and add its price
   if (poolCheckbox.checked) {
     totalprice += priceForPool;
   }
+
   // Check if massage checkbox is checked and add its price
   if (massageCheckbox.checked) {
     totalprice += priceForMassage;
   }
+
   // Display or use the totalprice as needed
   console.log('Total Price:', totalprice);
-  totalCostParent.innerHTML = '<h3 id="totalcosth3">Your total cost would be: $' + totalprice + '</h3>';
+  totalCostParent.innerHTML = '<h3 id="totalcosth3">Your total cost would be: $ <span id="totalcostvaluejs">' + totalprice + '</span></h3>';
   $('#totalCostInput').val(totalprice);
 });
+
+function applyDiscount() {
+  // Get the discount code entered by the user
+  const discountCode = document.getElementById('discountcodeInput').value;
+  let totalvalueForDiscount = document.getElementById('totalcostvaluejs');
+
+  // Define your valid discount codes
+  const validDiscounts = ['DISCOUNT20', 'EMAILDISCOUNT', 'SPECIAL20'];
+
+  // Check if the entered code is valid
+  if (validDiscounts.includes(discountCode)) {
+      totalvalueForDiscount = parseFloat(totalvalueForDiscount.textContent) * 0.8;
+      totalCostParent.innerHTML = '<h3 id="totalcosth3">Your total cost would be: $ <span id="totalcostvaluejs">' + totalvalueForDiscount + '</span></h3>';
+      $('#totalCostInput').val(totalvalueForDiscount);
+      alert("Discount applied successfully!");
+  } else {
+      alert("Invalid discount code. Please try again.");
+  }
+}
 
 function handleMassageCheckbox() {
   const massageImage = document.getElementById("massageImage");

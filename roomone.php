@@ -6,7 +6,6 @@ $jsvar = 0;
 /* var_dump(getBookedDates($db)); */ 
 // roomone.php
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if one of the forms has been submitted
     if (isset($_POST['emailAdress'])) {
@@ -28,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (insertEmail($db, $sanitizedEmail)) {
                     // Show the popup with the discount code only if email insertion was successful
                     $jsvar = 1;
+                    echo "successfull";
                 } else {
                     // Handle email insertion failure
                     echo "Failed to insert email.";
@@ -161,9 +161,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- <p class="costperday">Cost per day is <span id="basePrice"class="bigger">15</span> $ for this room.</p> -->
             </div>
             <div class="discount">
-                <p>Please apply your discount before booking!</p>
-                <input type="text" placeholder="DISCOUNT CODE">
-                <button>Apply</button>
+                <div  id="totalcostParent" class="discountedtotalcost">
+                </div>
+                <p>Please fill in your booking and then apply your discount before booking!</p>
+                <input id="discountcodeInput" type="text" placeholder="DISCOUNT CODE">
+                <button onclick="applyDiscount()">Apply</button>
             </div>
             <form class="formWrapper" action="roomone.php" method="POST">
                 <article class="lavaMassage">
@@ -329,7 +331,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if ($jsvar == 1): ?>
         <script> 
             const jsvar = 1; 
-            const discountCode = '<?php echo $discountCode; ?>'; 
+            const discountCode = '<?php echo $discountCode; ?>';
+            // run discount popup
         </script>
     <?php endif; ?>
     <script> const bookedDates = <?php echo json_encode($bookedDatesforLuxuryroom); ?>; </script>
