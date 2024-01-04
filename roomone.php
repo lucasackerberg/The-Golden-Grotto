@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Ibarra+Real+Nova&family=Noto+Serif+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="styles.css">
@@ -119,22 +119,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
         <div class="picsAndInfo">
             <div class="infoColumn">
-                <h3>Golden Oasis Suite</h3>
+                <h2 class="goldenOasis">Golden Oasis Suite</h2>
                 <p class="upper">
                     Immerse yourself in opulence with our Golden Oasis Suite. 
                     This room is a true sanctuary of luxury, featuring lavish decor, golden accents, and an ambiance that exudes regality.
                     The Golden Oasis Suite is designed for those who appreciate the finer things in life. Indulge in a royal experience with personalized service and unmatched comfort.
         
                 </p>
-                <p class="lower">
-                    Starting Price is $<span id="basePrice" class="biggertextforinfo">15</span> per night <br><br>
-                    Our <span class="biggertextforinfo">Features</span> are: <br><br>
-                    <span class="biggertextforinfo">King-sized</span> bed with premium linens <br><br>
-                    Private <span class="biggertextforinfo">Terrace</span> overlooking the shore and the cave-island. <br><br>
-                    <span class="biggertextforinfo">Jacuzzi</span> and spa-like bathroom <br><br>
-                    <span class="biggertextforinfo">24/7</span> Concierge Service <br><br>
-                    See our other addons at the <span class="biggertextforinfo"><a href="/activities">Activities</a></span> page!
-                </p>
+                <ul class="lower">
+                    <li>Starting Price is <span id="basePrice" class="biggertextforinfo"><span class="goldenspanForText">15 $</span></span> per night</li>
+                    <li>Our <span class="biggertextforinfo"><span class="goldenspanForText">Features</span></span> are:</li>
+                    <li><span class="biggertextforinfo"><span class="goldenspanForText">King-sized</span></span> bed with premium linens.</li>
+                    <li>Private <span class="biggertextforinfo"><span class="goldenspanForText">Terrace</span></span> overlooking the shore and the cave-island.</li>
+                    <li><span class="biggertextforinfo"><span class="goldenspanForText">Jacuzzi</span></span> and spa-like bathroom.</li>
+                    <li><span class="biggertextforinfo"><span class="goldenspanForText">24/7</span></span> Concierge Service.</li>
+                    <li>See our other addons at the <span class="biggertextforinfo"><a class="activitiesLink" href="/activities">Activities</a></span> page!</li>
+                </ul>
             </div>
             <div class="picColumn">
                 <div class="roompic"></div>
@@ -161,6 +161,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- <p class="costperday">Cost per day is <span id="basePrice"class="bigger">15</span> $ for this room.</p> -->
             </div>
             <div class="discount">
+                <div class="discountjpg">
+                    <img src="assets/images/discountjpg.jpg" alt="">
+                </div>
                 <div  id="totalcostParent" class="discountedtotalcost">
                 </div>
                 <p>Please fill in your booking and then apply your discount before booking!</p>

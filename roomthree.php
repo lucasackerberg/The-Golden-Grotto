@@ -6,7 +6,37 @@ require(__DIR__ . '/hotelFunctions.php');
 // roomone.php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check if the form has been submitted
+    // Check if one of the forms has been submitted
+    if (isset($_POST['emailAdress'])) {
+        $email = $_POST['emailAdress'];
+        $sanitizedEmail = sanitizeEmail($email);
+    
+        if ($sanitizedEmail !== null) {
+            // Use $sanitizedEmail safely
+            /* echo "Sanitized Email: " . $sanitizedEmail; */
+    
+            if (emailExists($db, $sanitizedEmail)) {
+                // Email already exists, handle accordingly
+                echo "Email already exists!";
+            } else {
+                // Generate a discount code (you can modify this part)
+                $discountCode = generateDiscountCode($db);
+    
+                // Insert the email
+                if (insertEmail($db, $sanitizedEmail)) {
+                    // Show the popup with the discount code only if email insertion was successful
+                    $jsvar = 1;
+                    echo "successfull";
+                } else {
+                    // Handle email insertion failure
+                    echo "Failed to insert email.";
+                }
+            }
+        } else {
+            // Invalid Email
+            echo "Invalid Email format";
+        }
+    }
     if (isset($_POST['dates'], $_POST['firstname'], $_POST['lastname'], $_POST['transfercode'], $_POST['totalCost'])) {
         $dates = sanitizeAndFormat($_POST['dates']);
         $startDate = $dates['start'];
@@ -63,29 +93,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Ibarra+Real+Nova&family=Noto+Serif+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="styles.css">
     <title>The Golden Grotto</title>
 </head>
-<body>
-    <nav>
-        <span class="goldenspan"><a href="index.php"><h1>THE GOLDEN GROTTO</h1></a></span>
-        <div class="navlista">
-            <ul class="nav-list">
-                <li><a href="index.php">HOME</a></li>
-                <li><a href="aboutus.php">ABOUT US</a></li>
-                <li><a href="/index.php#room-section">ROOMS</a></li>
-                <li><a href="activities.php">ACTIVITIES</a></li>
-            </ul>   
-        </div>
-    </nav>
+    <body>
+        <nav>
+            <span class="goldenspan"><a href="index.php"><h1>THE GOLDEN GROTTO</h1></a></span>
+            <div class="navlista">
+                <ul class="nav-list">
+                    <li><a href="index.php">HOME</a></li>
+                    <li><a href="aboutus.php">ABOUT US</a></li>
+                    <li><a href="/index.php#room-section">ROOMS</a></li>
+                    <li><a href="activities.php">ACTIVITIES</a></li>
+                </ul>   
+            </div>
+        </nav>
     <div class="wrapper">
+        <div class="overlay" id="overlay"></div>
+        <div class="popup-container" id="discountPopup">
+            <h2>Your Discount Code</h2>
+            <p>Here is your special discount code: <span id="discountCode"></span></p>
+            <button onclick="closePopup()">Close</button>
+        </div>
         <div class="picsAndInfo">
             <div class="infoColumn">
-                <h3>Hotel room</h3>
-                <p>blabkabkan</p>
+                <h2 class="sunlitAurum">Sunlit Aurum Chamber</h2>
+                <p class="upper">
+                Discover the Sunlit Aurum Chamber, a casual and inviting room designed for comfort and simplicity. 
+                Bask in the warmth of natural sunlight that fills this cozy chamber, creating a cheerful and relaxed atmosphere. 
+                The Sunlit Aurum Chamber is perfect for those who appreciate a laid-back environment without compromising on quality.
+                </p>
+                <p class="lower">
+
+                </p>
+                <ul class="lower">
+                    <li>Starting Price is <span id="basePrice" class="biggertextforinfo"><span class="goldenspanForText">7 $</span></span> per night</li>
+                    <li>Our <span class="biggertextforinfo"><span class="goldenspanForText">Features</span></span> are:</li>
+                    <li>Comfortable <span class="biggertextforinfo"><span class="goldenspanForText">Double bed</span></span> with cozy bedding.</li>
+                    <li>Sunlit <span class="biggertextforinfo">Atmosphere</span> with large windows. </li>
+                    <li><span class="biggertextforinfo">Compact</span> yet functional bathroom. </li>
+                    <li><span class="biggertextforinfo"><span class="goldenspanForText">24/7</span></span> Concierge Service.</li>
+                    <li>See our other addons at the <span class="biggertextforinfo"><a class="activitiesLink" href="/activities">Activities</a></span> page!</li>
+                </ul>
             </div>
             <div class="picColumn">
                 <div class="roompicCasual"></div>
@@ -109,11 +161,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 <!-- lägg till genom js -->
-                <p class="costperday">Cost per day is <span id="basePrice"class="goldenspan">15</span> $ for this room.</p>
+                <!-- <p class="costperday">Cost per day is <span id="basePrice"class="bigger">15</span> $ for this room.</p> -->
             </div>
-            <form class="formWrapper" action="roomthree.php" method="POST">
-                <input id="massageCheckbox" name="lavaMassage" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Lava massage 3$ USD</p>
-                <input id="poolCheckbox" name="poolAccess" type="checkbox" value="3" onchange="handleMassageCheckbox()"> <p>Pool access: 3$ USD</p>
+            <div class="discount">
+                <div  id="totalcostParent" class="discountedtotalcost">
+                </div>
+                <p>Please fill in your booking and then apply your discount before booking!</p>
+                <input id="discountcodeInput" type="text" placeholder="DISCOUNT CODE">
+                <button onclick="applyDiscount()">Apply</button>
+            </div>
+            <form class="formWrapper" action="roomone.php" method="POST">
+                <article class="lavaMassage">
+                    <input id="massageCheckbox" name="lavaMassage" type="checkbox" value="3" onchange="handleMassageCheckbox()">
+                        <div>
+                            <span>
+                            Lava Massage<br/>
+                            <span class="biggertextforinfo">+ $3.00</span>
+                            </span>
+                        </div>
+                </article>
+                <article class="lavaMassage">
+                <input id="poolCheckbox" name="poolAccess" type="checkbox" value="3" onchange="handleMassageCheckbox()">
+                        <div>
+                            <span>
+                            Pool Access<br/>
+                            <span class="biggertextforinfo">+ $3.00</span>
+                            </span>
+                        </div>
+                </article>
                 <input type="hidden" id="totalCostInput" name="totalCost" value="">
                 <div class="datepickerWrapper">
                     <i class="fa-solid fa-calendar"></i>
@@ -139,8 +214,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="layout_item w-50">
                         <div class="newsletter">
                         <h3 class="newsletter_title">Get a 20% discount when registering your email to our newsletter!</h3>
-                        <form action="">
-                            <input type="text" placeholder="Email Address">
+                        <form action="roomthree.php" method="POST">
+                            <input type="text" placeholder="Email Address" name=emailAdress>
                             <button>
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                                 <path fill="none" d="M0 0h24v24H0z" />
@@ -256,7 +331,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </footer>
     </div>
-    <script> const bookedDates = <?php echo json_encode($bookedDatesforCasualroom); ?>; </script>
+    <?php if ($jsvar == 1): ?>
+        <script> 
+            const jsvar = 1; 
+            const discountCode = '<?php echo $discountCode; ?>';
+            // run discount popup
+        </script>
+    <?php endif; ?>
+    <script> const bookedDates = <?php echo json_encode($bookedDatesforMediumroom); ?>; </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

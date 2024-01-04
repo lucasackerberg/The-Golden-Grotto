@@ -3,6 +3,7 @@
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/hotelFunctions.php');
 ?>
+<script> let jsvar = 0; </script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@ require(__DIR__ . '/hotelFunctions.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Ibarra+Real+Nova&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Ibarra+Real+Nova&family=Noto+Serif+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="styles.css">
@@ -85,16 +86,7 @@ require(__DIR__ . '/hotelFunctions.php');
                     <div class="layout">
                     <div class="layout_item w-50">
                         <div class="newsletter">
-                        <h3 class="newsletter_title">Get a 20% discount when registering your email to our newsletter!</h3>
-                        <form action="">
-                            <input type="text" placeholder="Email Address">
-                            <button>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                                <path fill="none" d="M0 0h24v24H0z" />
-                                <path d="M16.172 11l-5.364-5.364 1.414-1.414L20 12l-7.778 7.778-1.414-1.414L16.172 13H4v-2z" />
-                            </svg>
-                            </button>
-                        </form>
+                            <h3 class="newsletter_title">We hope you will enjoy your stay!</h3>
                         </div>
                     </div>
 
@@ -106,10 +98,10 @@ require(__DIR__ . '/hotelFunctions.php');
                                 <a href="/index.php#room-section" class="c-link">Our Rooms</a>
                             </li>
                             <li>
-                                <a href="/about-us" class="c-link">About Us</a>
+                                <a href="/aboutus.php" class="c-link">About Us</a>
                             </li>
                             <li>
-                                <a href="/blogs/community" class="c-link">Activities</a>
+                                <a href="/activities.php" class="c-link">Activities</a>
                             </li>
                         </ul>
                         </nav>

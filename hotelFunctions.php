@@ -135,7 +135,6 @@ function generateDiscountCode($db) {
 }
 
 
-
 /* ---------------------------------------------------- GUID ----------------------------------------> */
 function guidv4(string $data = null): string
 {

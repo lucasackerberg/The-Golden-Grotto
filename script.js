@@ -124,17 +124,10 @@ if (jsvar == 1) {
   showPopup(discountCode);
 }
 
-var swiper = new Swiper(".mySwiper", {
-  navigation: {
-    nextEl: ".swiper-button-next",
-    prevEl: ".swiper-button-prev",
-  },
-});
-
 document.addEventListener('DOMContentLoaded', function () {
   const targetSection = window.location.hash.substring(1);
   const targetElement = document.getElementById(targetSection);
-
+  
   if (targetElement) {
     targetElement.scrollIntoView({
       behavior: 'smooth',
@@ -142,4 +135,11 @@ document.addEventListener('DOMContentLoaded', function () {
       marginBottom: 30
     });
   }
+});
+
+var swiper = new Swiper(".mySwiper", {
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
 });

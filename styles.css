@@ -55,6 +55,23 @@ nav span a {
  
 }
 
+.goldenspanForText{
+    font-family: 'Cinzel';
+    font-weight: bold;
+    background-image: linear-gradient(
+     to right,
+     #462523 0,
+     #cb9b51 5%, 
+     #f6e27a 20%,
+     #f6f2c0 50%,
+     #f6e27a 80%,
+     #cb9b51 95%,
+     #462523 100%
+     );
+    color:transparent;
+    -webkit-background-clip:text;
+}
+
 .bigger{
     font-size: 30px;
 }
@@ -312,17 +329,39 @@ tbody{
     position: relative;
 }
 
-.infoColumn h3{
+.goldenOasis{
     position: absolute;
-    top: 0;
-    left: 190px;
+    top: 16px;
+    left: 47px;
     font-family: "Cinzel";
-    width: 195px;
+    width: 500px;
+    font-size: 50px;
+    margin-block-start: 0px;
+}
+
+.gildedGrotto{
+    position: absolute;
+    top: 16px;
+    left: 47px;
+    font-family: "Cinzel";
+    width: 500px;
+    font-size: 39px;
+    margin-block-start: 0px;
+}
+
+.sunlitAurum{
+    position: absolute;
+    top: 16px;
+    left: 47px;
+    font-family: "Cinzel";
+    width: 500px;
+    font-size: 39px;
+    margin-block-start: 0px;
 }
 
 .infoColumn .upper{
     position: absolute;
-    bottom: 361px;
+    bottom: 365px;
     left: 76px;
     width: 450px;
     font-family: 'Ibarra Real Nova';
@@ -336,7 +375,7 @@ tbody{
     left: 57px;
     width: 300px;
     font-family: 'Ibarra Real Nova';
-    line-height: 1.1;
+    line-height: 1.6     ;
     font-size: 17px;
 }
 
@@ -383,6 +422,7 @@ tbody{
     height: 50%;
     width: 100%;
     gap: 10px;
+    justify-content: center;
 }
 
 .bathroompic{
@@ -784,6 +824,21 @@ input[type=checkbox]:checked ~ div {
     flex-direction: column;
     justify-content: end;
     align-items: center;
+    gap: 20px;
+}
+
+.discountjpg{
+    display: flex;
+    position: relative;
+    height: 50%;
+    width: 100%;
+}
+
+.discountjpg img{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    object-fit: cover;
 }
 
 .discount input{
@@ -813,3 +868,20 @@ input[type=checkbox]:checked ~ div {
     font-size: 17px;
     width: 225px;
 }
+
+.activitiesLink:hover{
+    font-weight: bold;
+    background-image: linear-gradient(
+     to right,
+     #462523 0,
+     #cb9b51 5%, 
+     #f6e27a 20%,
+     #f6f2c0 50%,
+     #f6e27a 80%,
+     #cb9b51 95%,
+     #462523 100%
+     );
+    color:transparent;
+    -webkit-background-clip:text;
+}
+
