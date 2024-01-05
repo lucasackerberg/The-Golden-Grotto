@@ -87,6 +87,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // ... other code ...
 
 ?>
+<script> 
+let jsvar = 0;
+let bookingJS = false;
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>

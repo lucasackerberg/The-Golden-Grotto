@@ -86,7 +86,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 ?>
-<script> let jsvar = 0; </script>
+<script>
+// Added this to not have any Reference Errors in the console. There is probably a 1000 better solutions then this but hey, it works.
+// When doing these large projects you really have to structure it from the beginning. Having so much logic and and back-end stuff in both my JS-
+// And in PHP in this case really just hurts you in the end. So much extra work to just be able to combine them in my opinion. In the end, we're here to learn
+// "Having" to hard-code my discount-list in JS was hard to watch and do. But i wanted to be done so that was something i take with me and a BIG learning oppurtunity.
+let jsvar = 0;
+let bookingJS = false;
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
