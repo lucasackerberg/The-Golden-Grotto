@@ -53,11 +53,14 @@ function getBookedDatesforCasualroom(PDO $db): array
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function isAvailable($db, $startDate, $endDate) {
+function isAvailable($db, $startDate, $endDate, $roomNumber) {
     // Perform a database query to check availability
     $query = "SELECT COUNT(*) FROM bookings 
-              WHERE (checkin_date < :end_date AND checkout_date > :start_date)";
+              WHERE room_id = :room_number
+              AND (checkin_date < :end_date AND checkout_date > :start_date)";
+    
     $stmt = $db->prepare($query);
+    $stmt->bindParam(':room_number', $roomNumber, PDO::PARAM_INT);
     $stmt->bindParam(':start_date', $startDate);
     $stmt->bindParam(':end_date', $endDate);
     $stmt->execute();
@@ -281,23 +284,25 @@ function sanitizeEmail(string $email): string {
 // Booking JSON Response
 function createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber)
 {
+    global $features;
     $features = [];
 
     // Check if features are checked in the booking.
     if ($poolAccess) {
         $features[] = [
-            "name" => "poolAccess",
+            "name" => "Pool Access",
             "cost" => 3
         ];
     }
 
     if ($lavaMassage) {
         $features[] = [
-            "name" => "lavamassage",
+            "name" => "Massage Session",
             "cost" => 3
         ];
     }
 
+    global $bookingResponse;
     $bookingResponse = [
         "island" => "Glimmering Bay",
         "hotel" => "The Golden Grotto",
@@ -308,7 +313,7 @@ function createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAc
         "features" => $features,
         "additional_info" => [
             "greeting" => "Thank you for choosing The Golden Grotto",
-            "imageUrl" => "https://upload.wikimedia.org/wikipedia/commons/e/e2/Hotel_Boscolo_Exedra_Nice.jpg"
+            "imageUrl" => "https://th.bing.com/th/id/OIG.XiKMT5gx3QIt13Wc4Bqi?w=1024&h=1024&rs=1&pid=ImgDetMain"
         ]
     ];
 
@@ -316,8 +321,7 @@ function createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAc
     $bookingResponseJson = json_encode($bookingResponse);
 
     // Send the JSON response to the client
-    header('Content-Type: application/json');
-    echo $bookingResponseJson;
+    return $bookingResponseJson;
 }
 
 

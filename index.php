@@ -3,7 +3,10 @@
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/hotelFunctions.php');
 ?>
-<script> let jsvar = 0; </script>
+<script> 
+let jsvar = 0;
+let bookingJS = false;
+</script>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,7 +37,7 @@ require(__DIR__ . '/hotelFunctions.php');
             <div class="heroimg">
                 <div class="welcome">
                     <h3>Welcome to <span class="goldenspan">The Golden Grotto</span></h3>
-                    <p>Experience the Luxury of Radiance at Golden Grotto Cave Hotel – Where Every Moment Glistens with Golden Splendor!</p>
+                    <p>Experience the Luxury of Radiance at Golden Grotto Cave Hotel <br> Where Every Moment Glistens with Golden Splendor!</p>
                 </div>
             </div>
         </div>

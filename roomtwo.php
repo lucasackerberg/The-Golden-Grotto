@@ -3,8 +3,7 @@
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/hotelFunctions.php');
 $jsvar = 0;
-/* var_dump(getBookedDates($db)); */ 
-// roomone.php
+$bookingJS = false;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if one of the forms has been submitted
@@ -17,10 +16,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             /* echo "Sanitized Email: " . $sanitizedEmail; */
     
             if (emailExists($db, $sanitizedEmail)) {
-                // Email already exists, handle accordingly
+                // Email already exists.
                 echo "Email already exists!";
             } else {
-                // Generate a discount code (you can modify this part)
+                // Generate a discount code.
                 $discountCode = generateDiscountCode($db);
     
                 // Insert the email
@@ -63,11 +62,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $poolAccess = isset($_POST['poolAccess']);
                         $lavaMassage = isset($_POST['lavaMassage']);
         
-                        if (isAvailable($db, $startDate, $endDate)) {
+                        if (isAvailable($db, $startDate, $endDate, $roomNumber)) {
                             // Dates are available, proceed with the booking
                             insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber);
                             echo "Booking successful!\n";
-                            // createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber);
+                            $jsonContentForBookingPopup = (createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber));
+                            $bookingJS = true;
                         } else {
                             // Dates are not available
                             echo "Selected dates are not available. Please choose different dates.\n";
@@ -113,6 +113,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </nav>
     <div class="wrapper">
+        <div id="bookingPopup" class="bookingPopup">
+            <div class="booking-popup-content">
+                <h3> <?php echo $bookingResponse["additional_info"]["greeting"]; ?></h3>
+                <p>Island: <?php echo $bookingResponse["island"]; ?></p>
+                <p>Arrival date: <?php echo $bookingResponse["arrival_date"]; ?></p>
+                <p>Departure date: <?php echo $bookingResponse["departure_date"]; ?></p>
+                <p>Your total cost: <?php echo $bookingResponse["total_cost"]; ?></p>
+                <p>Hotel stars: <?php echo $bookingResponse["stars"]; ?></p>
+                <p>Features:</p>
+                    <?php if (empty($bookingResponse["features"])): ?>
+                        <p>None</p>
+                    <?php else: ?>
+                        <ul>
+                            <?php foreach ($bookingResponse["features"] as $feature): ?>
+                                <li><?php echo $feature["name"] . ' (Cost: ' . $feature["cost"] . ' $ )'; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                <img class="greetingPictureJson" src="<?php echo $bookingResponse["additional_info"]["imageUrl"];?>" alt="Greeting Picture">
+                <span class="close" onclick="closeBookingPopup()">&times;</span>
+                <p id="jsonContent"></p>
+            </div>
+        </div>
         <div class="overlay" id="overlay"></div>
         <div class="popup-container" id="discountPopup">
             <h2>Your Discount Code</h2>
@@ -162,6 +185,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- <p class="costperday">Cost per day is <span id="basePrice"class="bigger">15</span> $ for this room.</p> -->
             </div>
             <div class="discount">
+                <div class="discountjpg">
+                    <img src="assets/images/discountjpg.jpg" alt="">
+                </div>
                 <div  id="totalcostParent" class="discountedtotalcost">
                 </div>
                 <p>Please fill in your booking and then apply your discount before booking!</p>
@@ -334,6 +360,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             const jsvar = 1; 
             const discountCode = '<?php echo $discountCode; ?>';
             // run discount popup
+        </script>
+    <?php endif; ?>
+    <?php if ($bookingJS == true): ?>
+        <script>
+            let bookingJS = true;
+            let jsonContentForBookingPopup = '<?php echo $jsonContentForBookingPopup; ?>';
         </script>
     <?php endif; ?>
     <script> const bookedDates = <?php echo json_encode($bookedDatesforMediumroom); ?>; </script>

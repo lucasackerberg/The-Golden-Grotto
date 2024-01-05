@@ -3,7 +3,6 @@ const priceForMassage = 3;
 const totalCostParent = document.getElementById("totalcostParent");
 const poolCheckbox = document.getElementById("poolCheckbox");
 const massageCheckbox = document.getElementById("massageCheckbox");
-const discountCodes = 
 
 $('#demo').daterangepicker({
   parentEl: "formWrapper",
@@ -120,8 +119,23 @@ function closePopup() {
   document.getElementById('discountPopup').style.display = 'none';
 }
 
+function showBookingPopup(jsonContentForBookingPopup) {
+  document.getElementById('jsonContent').textContent = jsonContentForBookingPopup;
+  document.getElementById('bookingPopup').style.display = 'block';
+  document.getElementById('overlay').style.display = 'block';
+}
+
+function closeBookingPopup() {
+  document.getElementById('bookingPopup').style.display = 'none';
+  document.getElementById('overlay').style.display = 'none';
+}
+
 if (jsvar == 1) {
   showPopup(discountCode);
+}
+
+if (bookingJS == true) {
+  showBookingPopup(jsonContentForBookingPopup);
 }
 
 document.addEventListener('DOMContentLoaded', function () {

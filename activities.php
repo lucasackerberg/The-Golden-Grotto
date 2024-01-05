@@ -38,7 +38,7 @@ require(__DIR__ . '/hotelFunctions.php');
                 <h3><span class="goldenspan">Lava Massage</span></h3>
                 <p>
                 Experience pure serenity with our signature Lava Massage at Golden Grotto Spa. 
-                Let volcanic stones dissolve tension, melt away stress, and rejuvenate your senses. 
+                Let volcanic stones dissolve tension and melt away stress. 
                 Our skilled therapists orchestrate relaxation, promoting a profound sense of well-being. 
                 Immerse yourself in luxury, embrace tranquility, and emerge renewed at Golden Grotto Spa.</p>
                 <h3>3 $</h3>
