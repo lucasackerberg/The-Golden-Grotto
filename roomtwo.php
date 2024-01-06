@@ -194,7 +194,7 @@ let bookingJS = false;
                 </div>
                 <div  id="totalcostParent" class="discountedtotalcost">
                 </div>
-                <p>Please fill in your booking and then apply your discount before booking!</p>
+                <p>Please choose your dates and fill in your booking before applying your discount-code. After that press the Book button.</p>
                 <input id="discountcodeInput" type="text" placeholder="DISCOUNT CODE">
                 <button onclick="applyDiscount()">Apply</button>
             </div>
@@ -275,7 +275,7 @@ let bookingJS = false;
                             <h4 class="c-nav-tool_title">Support</h4>
                                 <ul class="c-nav-tool_list">
                                     <li class="c-nav-tool_item">
-                                        <a href="/pages/help" class="c-link">Help &amp; FAQ</a>
+                                        <p>Help &amp; FAQ: <br><br> <span>If you have any concerns or questions, send an email to goldengrotto@help.com</span></p>
                                     </li>
                                 </ul>
                             </nav>

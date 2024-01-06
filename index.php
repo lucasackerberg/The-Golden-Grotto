@@ -114,7 +114,7 @@ let bookingJS = false;
                             <h4 class="c-nav-tool_title">Support</h4>
                                 <ul class="c-nav-tool_list">
                                     <li class="c-nav-tool_item">
-                                        <a href="/pages/help" class="c-link">Help &amp; FAQ</a>
+                                        <p>Help &amp; FAQ: <br><br> <span>If you have any concerns or questions, send an email to goldengrotto@help.com</span></p>
                                     </li>
                                 </ul>
                             </nav>

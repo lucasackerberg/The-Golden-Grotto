@@ -151,7 +151,7 @@ nav span a {
 
 .welcome p{
     color: whitesmoke;
-    font-size: 18px;
+    font-size: 23px;
     font-family: 'Noto Serif Display', serif;
 }
 
@@ -298,9 +298,11 @@ tbody{
 }
 
 .transfercode button{
-    background-color: #ffb700;
-    border: none;
-    color:#131717;
+    border: 2px solid #ffb700;
+    background-color: #131717;
+    color: whitesmoke;
+    border-radius: 5px;
+    font-family: 'Ibarra Real Nova';
     padding: 8px 50px;
     text-align: center;
     text-decoration: none;
@@ -310,6 +312,11 @@ tbody{
     margin: 4px 2px;
     cursor: pointer;
     font-family: 'Cinzel';
+}
+
+.transfercode button:hover{
+    background-color: #ffb700;
+    color: #131717;
 }
 
 .picsAndInfo{
@@ -501,8 +508,6 @@ footer {
     text-decoration: none;
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+Display:wght@300&family=Rubik:wght@400;500;700&display=swap");
-
 footer{
     font-family: "Rubik", sans-serif;
 }
@@ -573,6 +578,10 @@ footer form {
   justify-content: space-between;
   width: min(100%, 400px);
   border-bottom: 1px solid var(--whitesmoke);
+}
+
+.c-nav-tool_item p span{
+    font-size: 12px;
 }
 
 footer input {
@@ -849,9 +858,11 @@ input[type=checkbox]:checked ~ div {
 }
 
 .discount button{
-    background-color: #ffb700;
-    border: none;
-    color:#131717;
+    border: 2px solid #ffb700;
+    background-color: #131717;
+    color: whitesmoke;
+    border-radius: 5px;
+    font-family: 'Ibarra Real Nova';
     padding: 8px 50px;
     text-align: center;
     text-decoration: none;
@@ -860,7 +871,11 @@ input[type=checkbox]:checked ~ div {
     font-weight: 600;
     margin: 4px 2px;
     cursor: pointer;
-    font-family: 'Cinzel';
+}
+
+.discount button:hover{
+    background-color: #ffb700;
+    color: #131717;
 }
 
 .discount p{

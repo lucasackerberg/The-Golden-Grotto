@@ -87,10 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 ?>
 <script>
-// Added this to not have any Reference Errors in the console. There is probably a 1000 better solutions then this but hey, it works.
-// When doing these large projects you really have to structure it from the beginning. Having so much logic and and back-end stuff in both my JS-
-// And in PHP in this case really just hurts you in the end. So much extra work to just be able to combine them in my opinion. In the end, we're here to learn
-// "Having" to hard-code my discount-list in JS was hard to watch and do. But i wanted to be done so that was something i take with me and a BIG learning oppurtunity.
+// Added this to not have any Reference Errors in the console.
 let jsvar = 0;
 let bookingJS = false;
 </script>
@@ -199,7 +196,7 @@ let bookingJS = false;
                 </div>
                 <div  id="totalcostParent" class="discountedtotalcost">
                 </div>
-                <p>Please fill in your booking and then apply your discount before booking!</p>
+                <p>Please choose your dates and fill in your booking before applying your discount-code. After that press the Book button.</p>
                 <input id="discountcodeInput" type="text" placeholder="DISCOUNT CODE">
                 <button onclick="applyDiscount()">Apply</button>
             </div>
@@ -246,7 +243,7 @@ let bookingJS = false;
                     <div class="layout">
                     <div class="layout_item w-50">
                         <div class="newsletter">
-                        <p class="newsletter_title">Get a 20% discount when registering your email to our newsletter!</p>
+                        <h3 class="newsletter_title">Get a 20% discount when registering your email to our newsletter!</h3>
                         <form action="roomone.php" method="POST">
                             <input type="text" placeholder="Email Address" name=emailAdress>
                             <button>
@@ -280,7 +277,7 @@ let bookingJS = false;
                             <h4 class="c-nav-tool_title">Support</h4>
                                 <ul class="c-nav-tool_list">
                                     <li class="c-nav-tool_item">
-                                        <a href="/pages/help" class="c-link">Help &amp; FAQ</a>
+                                        <p>Help &amp; FAQ: <br><br> <span>If you have any concerns or questions, send an email to goldengrotto@help.com</span></p>
                                     </li>
                                 </ul>
                             </nav>
