@@ -1,6 +1,8 @@
-![sandybeach](https://github.com/lucasackerberg/The-Golden-Grotto/assets/143884332/3e4d2fef-409e-4f15-9ab1-3bc99a39203a)
+<div align="center">
+    <img src="https://github.com/lucasackerberg/The-Golden-Grotto/assets/143884332/4400b28e-4909-4aa8-8ac7-96e4c6bb79b8" height="400" alt="sandybeach">
+</div>
 
-# Glimmering Bay
+# The Glimmering Bay
 
 Nestled in the embrace of azure waters, The Glimmering Bay stands as a picturesque island paradise, offering a sanctuary of tranquility and natural beauty. This captivating haven is renowned for its crystal-clear waters that sparkle like diamonds under the golden rays of the sun. The shores are adorned with pristine, sandy beaches, inviting travelers to indulge in moments of serenity and relaxation.
 
@@ -11,6 +13,12 @@ Indulge in opulence at The Golden Grotto, a luxurious retreat perched on the sho
 # Instructions
 
 Have fun!
+
+# Thoughts and Approach
+A really fun project, seeing all these things we've learned throughout these months coming together and grasping it all on a basic level is why this is fun! Coming from basic html and css to this in this short of a span really makes you imagine what you could do in the future and makes you wonder what you want to code in the future.
+
+There is probably a 1000 better solutions then this. (this being my back-end solutions for some of my functions and logic) but hey, it works and that's the name of the game as i'm learing 🚀
+When doing these large projects you really have to structure it from the beginning. Having so much logic and and back-end stuff in both my JS and in PHP in this case really just hurts you in the end. So much extra work to just be able to combine them in my opinion. In the end, we're here to learn. "Having" to hard-code my discount-list in JS was hard to watch and do. As JS is often used for client side/ user browser to enhance functionality. But, i wanted to be done so that was something i take with me and a BIG learning oppurtunity. I stumbled upon AJAX (Asynchronous JavaScript and XML) and could've dipped my toes into it to ultimately help me but i chose not to in the end. Partly due to the scale of the project and everything having to work together and on the other hand, me being in to deep with passing the things i needed to pass through my php files into my script file.
 
 # Code review
 
