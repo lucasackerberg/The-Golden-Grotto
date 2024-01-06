@@ -1,16 +1,16 @@
-WHY NOT A GIF HERE? TO SET THE MOOD.
+![sandybeach](https://github.com/lucasackerberg/The-Golden-Grotto/assets/143884332/3e4d2fef-409e-4f15-9ab1-3bc99a39203a)
 
-# Weird Smelling Island
+# Glimmering Bay
 
-Some text about your lovely island
+Nestled in the embrace of azure waters, The Glimmering Bay stands as a picturesque island paradise, offering a sanctuary of tranquility and natural beauty. This captivating haven is renowned for its crystal-clear waters that sparkle like diamonds under the golden rays of the sun. The shores are adorned with pristine, sandy beaches, inviting travelers to indulge in moments of serenity and relaxation.
 
-# (SDH) Smelling Detergent Hotel
+# The Golden Grotto
 
-Why not add some info about the hotel of your dreams?
+Indulge in opulence at The Golden Grotto, a luxurious retreat perched on the shores of The Glimmering Bay. Our hotel offers a regal experience with lavish accommodations, including the opulent Golden Oasis Suite and the serene Gilded Grotto Retreat. Enjoy personalized service, stunning views, and optional features like pool access and lava massages. Immerse yourself in the tranquility of our three-star haven, where every moment glistens with golden splendor.
 
 # Instructions
 
-If your project requires some installation or similar, please inform your user 'bout it. For instance, if you want a more decent indentation of your .php files, you could edit [.editorconfig]('/.editorconfig').
+Have fun!
 
 # Code review
 
