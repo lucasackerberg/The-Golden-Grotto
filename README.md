@@ -26,7 +26,15 @@ Have fun!
 A really fun project, seeing all these things we've learned throughout these months coming together and grasping it all on a basic level is why this is fun! Coming from basic html and css to this in this short of a span really makes you imagine what you could do in the future and makes you wonder what you want to code in the future.
 
 There is probably a 1000 better solutions then this. (this being my back-end solutions for some of my functions and logic) but hey, it works and that's the name of the game as i'm learing 🚀
-When doing these large projects you really have to structure it from the beginning. Having so much logic and and back-end stuff in both my JS and in PHP in this case really just hurts you in the end. So much extra work to just be able to combine them in my opinion. In the end, we're here to learn. "Having" to hard-code my discount-list in JS was hard to watch and do. As JS is often used for client side/ user browser to enhance functionality. But, i wanted to be done so that was something i take with me and a BIG learning oppurtunity. I stumbled upon AJAX (Asynchronous JavaScript and XML) and could've dipped my toes into it to ultimately help me but i chose not to in the end. Partly due to the scale of the project and everything having to work together and on the other hand, me being in to deep with passing the things i needed to pass through my php files into my script file.
+When doing these large projects you really have to structure it from the beginning. Having so much logic and and back-end stuff in both my JS and in PHP in this case really just hurts you in the end. So much extra work to just be able to combine them in my opinion. In the end, we're here to learn. 
+
+"Having" to hard-code my discount-list in JS was hard to watch and do. As JS is often used for client side/ user browser to enhance functionality. But, i wanted to be done so that was something i take with me and a BIG learning oppurtunity. I stumbled upon AJAX which Tobias has mentioned (Asynchronous JavaScript and XML) and could've dipped my toes into it to ultimately help me but i chose not to in the end. Partly due to the scale of the project and everything having to work together and on the other hand, me being in to deep with passing the things i needed to pass through my php files into my script file.
+
+### (EDIT)
+Added calculation validation for bookings. These were also hard-coded as i wanted some type of validation for users to not be able to use the discount infinitely or just simply change the cost for the booking to be able to pay close to nothing. I shouldve added tables and or rows in my databse structure to validate the costs there, being able to change the costs in the database and simply using them from there to validate bookings and add everything up would've been much simpler.
+
+### (The Silvertejp-solution)
+I feel like in general ive used the silvertejp-solution to fix many of the things to just make them work for now. More complex and easy solution have crossed my mind coming in towards the end of the project as ive learned alot during the project. I visualize what i could've and should've, and theres much room for improvement to this project as its only in the start of its lifespan!
 
 ## Contributions Welcome!
 
