@@ -3,6 +3,7 @@ const priceForMassage = 3;
 const totalCostParent = document.getElementById("totalcostParent");
 const poolCheckbox = document.getElementById("poolCheckbox");
 const massageCheckbox = document.getElementById("massageCheckbox");
+let discountCounter = 0;
 
 $('#demo').daterangepicker({
   parentEl: "formWrapper",
@@ -59,7 +60,7 @@ $('#demo').on('apply.daterangepicker', function(ev, picker) {
   // Display or use the totalprice as needed
   console.log('Total Price:', totalprice);
   totalCostParent.innerHTML = '<h3 id="totalcosth3">Your total cost would be: $ <span id="totalcostvaluejs">' + totalprice + '</span></h3>';
-  $('#totalCostInput').val(totalprice);
+  document.getElementById('totalCostInput').value = totalprice;
 });
 
 function applyDiscount() {
@@ -71,14 +72,30 @@ function applyDiscount() {
   const validDiscounts = ['DISCOUNT20', 'EMAILDISCOUNT', 'SPECIAL20'];
 
   // Check if the entered code is valid
-  if (validDiscounts.includes(discountCode)) {
-      totalvalueForDiscount = parseFloat(totalvalueForDiscount.textContent) * 0.8;
-      totalCostParent.innerHTML = '<h3 id="totalcosth3">Your total cost would be: $ <span id="totalcostvaluejs">' + totalvalueForDiscount + '</span></h3>';
-      $('#totalCostInput').val(totalvalueForDiscount);
+  if(discountCounter >=1) {
+    alert("Oops! You can only apply the discount once.");
+  } else{
+    if (validDiscounts.includes(discountCode)) {
+      let originalTotal = parseFloat(totalvalueForDiscount.textContent);
+      console.log(originalTotal);
+      let discountedTotal = Math.floor(originalTotal * 0.8);
+
+      totalvalueForDiscount.textContent = discountedTotal;
+      
+      document.getElementById('totalCostInput').value = discountedTotal;
+
+      discountCounter++;
+      console.log(discountCounter);
       alert("Discount applied successfully!");
-  } else {
+    } else {
       alert("Invalid discount code. Please try again.");
+    }
   }
+}
+
+
+function handleErrorMessage() {
+
 }
 
 function handleMassageCheckbox() {
@@ -133,6 +150,8 @@ function closeBookingPopup() {
 if (jsvar == 1) {
   showPopup(discountCode);
 }
+
+console.log(bookingJS);
 
 if (bookingJS == true) {
   showBookingPopup(jsonContentForBookingPopup);

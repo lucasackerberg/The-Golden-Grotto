@@ -71,7 +71,6 @@ function isAvailable($db, $startDate, $endDate, $roomNumber) {
 
 
 function insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber) {
-    var_dump($totalcosttot);
     // Perform a database query to insert the booking
     $query = "INSERT INTO bookings (checkin_date, checkout_date, booked_by, poolaccess, lavamassage, total_cost, room_id)
               VALUES (:start_date, :end_date, :full_name, :pool_access, :lava_massage, :total_cost, :room_id)";
@@ -223,7 +222,7 @@ function depositIntoBankAccount($transfercode)
         // Log API response
         $responseData = json_decode($body, true);
         $successMessageFromBank = $responseData['message'];
-        echo $successMessageFromBank . "\n";
+        echo "<div class='success-message'>$successMessageFromBank\n</div>";
         return true;
 
     } catch (\Exception $e) {
@@ -280,6 +279,45 @@ function sanitizeEmail(string $email): string {
         return null;
     }
 }
+
+function calculateTotalCost($startDate, $endDate, $roomNumber, $poolAccess, $lavaMassage, $totalcosttot) {
+    // Convert 'Y-m-d' dates to Unix timestamps
+    $startTimestamp = strtotime($startDate);
+    $endTimestamp = strtotime($endDate);
+
+    // Calculate the number of days
+    $dateDiff = floor(($endTimestamp - $startTimestamp) / (60 * 60 * 24)) + 1;
+
+    // Validate room number
+    if ($roomNumber == 1) {
+        $baseCost = 15;
+    } elseif ($roomNumber == 2) {
+        $baseCost = 10;
+    } else {
+        // Room number must be 3, so the base cost is 7.
+        $baseCost = 7;
+    }
+    $costWithoutFeatures = $dateDiff * $baseCost;
+
+    // Add feature costs
+    if ($poolAccess) {
+        $costWithoutFeatures += 3;
+    }
+
+    if ($lavaMassage) {
+        $costWithoutFeatures += 3;
+    }
+     $validatedCost = $costWithoutFeatures;
+
+    if($validatedCost == $totalcosttot){
+        return true;
+    } elseif (floor($validatedCost * 0.8) == $totalcosttot) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 
 // Booking JSON Response
 function createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber)

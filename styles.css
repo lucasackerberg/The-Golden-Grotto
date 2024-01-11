@@ -381,8 +381,11 @@ tbody{
     left: 57px;
     width: 300px;
     font-family: 'Ibarra Real Nova';
-    line-height: 1.6     ;
+    line-height: 1.6;
     font-size: 17px;
+    padding: 25px;
+    border-bottom: 1px solid var(--whitesmoke);
+    border-top: 1px solid var(--whitesmoke);
 }
 
 .infoColumn .lower a{
@@ -948,4 +951,16 @@ input[type=checkbox]:checked ~ div {
     top: 0;
     right: 0;
     height: 40vh;
+}
+
+.error-message {
+    color: red;
+}
+
+.success-message {
+    color: green;
+}
+
+.discountedtotalcost h3{
+    font-family: "Noto Serif Display", serif;
 }

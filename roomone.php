@@ -2,8 +2,16 @@
 /* php stuff */
 require(__DIR__ . '/vendor/autoload.php');
 require(__DIR__ . '/hotelFunctions.php');
+require __DIR__ . "/header.php";
 $jsvar = 0;
 $bookingJS = false;
+?>
+<script>
+// Added this to not have any Reference Errors in the console.
+var jsvar = 0;
+var bookingJS = false;
+</script>
+<?php
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Check if one of the forms has been submitted
@@ -17,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (emailExists($db, $sanitizedEmail)) {
                 // Email already exists.
-                echo "Email already exists!";
+                echo "<div class='error-message'>Email already exists!</div>";
             } else {
                 // Generate a discount code.
                 $discountCode = generateDiscountCode($db);
@@ -26,15 +34,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (insertEmail($db, $sanitizedEmail)) {
                     // Show the popup with the discount code only if email insertion was successful
                     $jsvar = 1;
-                    echo "successfull";
+                    echo "<div class='success-message'>Successfully inserted email.</div>";
                 } else {
                     // Handle email insertion failure
-                    echo "Failed to insert email.";
+                    echo "<div class='error-message'>Failed to insert email.</div>";
                 }
             }
         } else {
             // Invalid Email
-            echo "Invalid Email format";
+            echo "<div class='error-message'>Invalid Email format</div>";
         }
     }
     if (isset($_POST['dates'], $_POST['firstname'], $_POST['lastname'], $_POST['transfercode'], $_POST['totalCost'])) {
@@ -52,70 +60,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Transfer code is properly structured, proceed with checking
             if (checkTransferCode($transfercode, $totalcosttot)) {
                 // Transfer code is valid, proceed with the booking
-                echo "Transfer code is valid!\n";
-                if (depositIntoBankAccount($transfercode)) {
-                // Deposition okay, money is now in the bank!
-                // Proceed with booking!
-                // Ändra ordning på dessa ??!?!?. Dumt att ta emot pengar om inte bokningen går igenom eller om någon annan bokar exakt samtidigt.
-                echo "Money is now in the bank";
+                echo "<div class='success-message'>Transfer code is valid!</div>";
+                if (isAvailable($db, $startDate, $endDate, $roomNumber)) {
+                // Dates are available, proceed with the booking.
+                echo "<div class='success-message'>Dates are avaliable, proceed with booking.</div>";
                     if ($dates !== null) {
                         // Check if the checkboxes are checked
                         $poolAccess = isset($_POST['poolAccess']);
                         $lavaMassage = isset($_POST['lavaMassage']);
-        
-                        if (isAvailable($db, $startDate, $endDate, $roomNumber)) {
-                            // Dates are available, proceed with the booking
-                            insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber);
-                            echo "Booking successful!\n";
-                            $jsonContentForBookingPopup = (createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber));
-                            $bookingJS = true;
-                        } else {
-                            // Dates are not available
-                            echo "Selected dates are not available. Please choose different dates.\n";
+                        if(calculateTotalCost($startDate, $endDate, $roomNumber, $poolAccess, $lavaMassage, $totalcosttot) == true) {
+                            // Cost is validated and not changed by user, proceed.
+                            if (depositIntoBankAccount($transfercode)) {
+                                // Deposition okay, money is now in the bank!
+                                // Proceed with booking!
+                                insertBooking($db, $startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber);
+                                $jsonContentForBookingPopup = (createJSONResponse($startDate, $endDate, $firstname, $lastname, $poolAccess, $lavaMassage, $totalcosttot, $roomNumber));
+                                $bookingJS = true;
+                                echo "<div class='success-message'>Booking successful!</div>";
+                            } else {
+                                // Dates are not available
+                                echo "<div class='error-message'>Money could not be wired to bank, please try again.</div>";
+                            }
+                        } else{
+                            // Cost is wrong, do not proceed.
+                            echo "<div class='error-message'>Cost could not be validated, please try again. FYI, you can only use the code once per booking!</div>";
                         }
                     }
                 } else {
-                    echo "Money could not be wired to the bank. Please try again!";
+                    echo "<div class='error-message'>Selected dates are not avaliable, please choose different dates.</div>";
                 }
             } else {
                 // Transfer code is not valid
-                echo "Invalid transfer code. Please provide a valid transfer code.";
+                echo "<div class='error-message'>Invalid transfer code, Please try again.</div>";
             }
         }
     }
 }
 
 ?>
-<script>
-// Added this to not have any Reference Errors in the console.
-let jsvar = 0;
-let bookingJS = false;
-</script>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Ibarra+Real+Nova&family=Noto+Serif+Display&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-    <link rel="stylesheet" href="styles.css">
-    <title>The Golden Grotto</title>
-</head>
-<body>
-    <nav>
-        <span class="goldenspan"><a href="index.php"><h1>THE GOLDEN GROTTO</h1></a></span>
-        <div class="navlista">
-            <ul class="nav-list">
-                <li><a href="index.php">HOME</a></li>
-                <li><a href="aboutus.php">ABOUT US</a></li>
-                <li><a href="/index.php#room-section">ROOMS</a></li>
-                <li><a href="activities.php">ACTIVITIES</a></li>
-            </ul>   
-        </div>
-    </nav>
     <div class="wrapper">
         <div id="bookingPopup" class="bookingPopup">
             <div class="booking-popup-content">
@@ -219,7 +201,7 @@ let bookingJS = false;
                             </span>
                         </div>
                 </article>
-                <input type="hidden" id="totalCostInput" name="totalCost" value="">
+                <input type="hidden" id="totalCostInput" name="totalCost" value="" readonly="readonly">
                 <div class="datepickerWrapper">
                     <i class="fa-solid fa-calendar"></i>
                     <input class="datepicker" type="text" id="demo" name="dates">
@@ -274,7 +256,6 @@ let bookingJS = false;
                     </div>
                     <div class="layout_item w-25">
                         <nav class="c-nav-tool">
-                            <h4 class="c-nav-tool_title">Support</h4>
                                 <ul class="c-nav-tool_list">
                                     <li class="c-nav-tool_item">
                                         <p>Help &amp; FAQ: <br><br> <span>If you have any concerns or questions, send an email to goldengrotto@help.com</span></p>
@@ -363,15 +344,15 @@ let bookingJS = false;
     </div>
     <?php if ($jsvar == 1): ?>
         <script> 
-            const jsvar = 1; 
-            const discountCode = '<?php echo $discountCode; ?>';
+            var jsvar = 1; 
+            var discountCode = '<?php echo $discountCode; ?>';
             // run discount popup
         </script>
     <?php endif; ?>
     <?php if ($bookingJS == true): ?>
         <script>
-            let bookingJS = true;
-            let jsonContentForBookingPopup = '<?php echo $jsonContentForBookingPopup; ?>';
+            var bookingJS = true;
+            var jsonContentForBookingPopup = '<?php echo $jsonContentForBookingPopup; ?>';
         </script>
     <?php endif; ?>
     <script> const bookedDates = <?php echo json_encode($bookedDatesforLuxuryroom); ?>; </script>

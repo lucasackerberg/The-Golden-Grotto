@@ -91,7 +91,6 @@ require(__DIR__ . '/hotelFunctions.php');
                     </div>
                     <div class="layout_item w-25">
                         <nav class="c-nav-tool">
-                            <h4 class="c-nav-tool_title">Support</h4>
                                 <ul class="c-nav-tool_list">
                                     <li class="c-nav-tool_item">
                                         <p>Help &amp; FAQ: <br><br> <span>If you have any concerns or questions, send an email to goldengrotto@help.com</span></p>
