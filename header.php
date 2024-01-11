@@ -17,7 +17,7 @@
             <ul class="nav-list">
                 <li><a href="index.php">HOME</a></li>
                 <li><a href="aboutus.php">ABOUT US</a></li>
-                <li><a href="/index.php#room-section">ROOMS</a></li>
+                <li><a href="index.php#room-section">ROOMS</a></li>
                 <li><a href="activities.php">ACTIVITIES</a></li>
             </ul>   
         </div>
