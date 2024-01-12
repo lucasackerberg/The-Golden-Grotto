@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 The Gilded Grotto Retreat offers a perfect balance of comfort and elegance, making it an ideal choice for those seeking a peaceful getaway.
                 </p>
                 <ul class="lower">
-                    <li>Starting Price is <span id="basePrice" class="biggertextforinfo"><span class="goldenspanForText">10 $</span></span> per night</li>
+                    <li>Starting Price is <span id="basePrice" class="biggertextforinfo"><span class="goldenspanForText">6 $</span></span> per night</li>
                     <li>Our <span class="biggertextforinfo"><span class="goldenspanForText">Features</span></span> are:</li>
                     <li><span class="biggertextforinfo"><span class="goldenspanForText">Queen-Sized</span></span> bed with premium linens.</li>
                     <li>Private <span class="biggertextforinfo"><span class="goldenspanForText">Terrace</span></span> surrounded by lush greenery.</li>

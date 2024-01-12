@@ -138,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                 </p>
                 <ul class="lower">
-                    <li>Starting Price is <span id="basePrice" class="biggertextforinfo"><span class="goldenspanForText">15 $</span></span> per night</li>
+                    <li>Starting Price is <span id="basePrice" class="biggertextforinfo"><span class="goldenspanForText">8 $</span></span> per night</li>
                     <li>Our <span class="biggertextforinfo"><span class="goldenspanForText">Features</span></span> are:</li>
                     <li><span class="biggertextforinfo"><span class="goldenspanForText">King-sized</span></span> bed with premium linens.</li>
                     <li>Private <span class="biggertextforinfo"><span class="goldenspanForText">Terrace</span></span> overlooking the shore and the cave-island.</li>

@@ -28,7 +28,7 @@ let bookingJS = false;
                             <img src="assets/images/luxury-grotto.jpg" alt="">
                             <div class="info">
                                 <h3>Golden Oasis Suite</h3>
-                                <p>The Golden Oasis Suite is a luxurious escape from reality. <br> Starting at <span class="bigger">15$</span> per night</p>
+                                <p>The Golden Oasis Suite is a luxurious escape from reality. <br> Starting at <span class="bigger">8$</span> per night</p>
                                 <a href="roomone.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
                             </div>
                         </div>
@@ -36,7 +36,7 @@ let bookingJS = false;
                             <img src="assets/images/medium-grotto.jpg" alt="">
                             <div class="info">
                                 <h3>Gilded Grotto Retreat</h3>
-                                <p>The Gilded Grotto Retreat is a premier comfort experience. <br> Starting at <span class="bigger">10$</span> per night</p>
+                                <p>The Gilded Grotto Retreat is a premier comfort experience. <br> Starting at <span class="bigger">6$</span> per night</p>
                                 <a href="roomtwo.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
                             </div>
                         </div>
@@ -44,7 +44,7 @@ let bookingJS = false;
                             <img src="assets/images/simple-grotto.jpg" alt="">
                             <div class="info">
                                 <h3>Sunlit Aurum Chamber</h3>
-                                <p>The Sunlit Aurum Chamber is classic elegance room. <br> Starting at <span class="bigger">7$</span> per night</p>
+                                <p>The Sunlit Aurum Chamber is classic elegance room. <br> Starting at <span class="bigger">4$</span> per night</p>
                                 <a href="roomthree.php"><button><p>SEE MORE & BOOK NOW!</p></button></a>
                             </div>
                         </div>

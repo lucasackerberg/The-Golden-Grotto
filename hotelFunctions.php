@@ -290,12 +290,12 @@ function calculateTotalCost($startDate, $endDate, $roomNumber, $poolAccess, $lav
 
     // Validate room number
     if ($roomNumber == 1) {
-        $baseCost = 15;
+        $baseCost = 8;
     } elseif ($roomNumber == 2) {
-        $baseCost = 10;
+        $baseCost = 6;
     } else {
         // Room number must be 3, so the base cost is 7.
-        $baseCost = 7;
+        $baseCost = 4;
     }
     $costWithoutFeatures = $dateDiff * $baseCost;
 

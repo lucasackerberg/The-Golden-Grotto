@@ -140,7 +140,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 The Sunlit Aurum Chamber is perfect for those who appreciate a laid-back environment without compromising on quality.
                 </p>
                 <ul class="lower">
-                    <li>Starting Price is <span id="basePrice" class="biggertextforinfo"><span class="goldenspanForText">7 $</span></span> per night</li>
+                    <li>Starting Price is <span id="basePrice" class="biggertextforinfo"><span class="goldenspanForText">4 $</span></span> per night</li>
                     <li>Our <span class="biggertextforinfo"><span class="goldenspanForText">Features</span></span> are:</li>
                     <li>Comfortable <span class="biggertextforinfo"><span class="goldenspanForText">Double bed</span></span> with cozy bedding.</li>
                     <li>Sunlit <span class="biggertextforinfo">Atmosphere</span> with large windows. </li>
