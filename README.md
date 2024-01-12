@@ -2,6 +2,9 @@
     <img src="https://github.com/lucasackerberg/The-Golden-Grotto/assets/143884332/4400b28e-4909-4aa8-8ac7-96e4c6bb79b8" height="400" alt="sandybeach">
 </div>
 
+## [Deployed Website](http://lucasackerberg.se/thegoldengrotto)
+
+
 # The Glimmering Bay
 
 Nestled in the embrace of azure waters, The Glimmering Bay stands as a picturesque island paradise, offering a sanctuary of tranquility and natural beauty. This captivating haven is renowned for its crystal-clear waters that sparkle like diamonds under the golden rays of the sun. The shores are adorned with pristine, sandy beaches, inviting travelers to indulge in moments of serenity and relaxation.
