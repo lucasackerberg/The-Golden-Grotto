@@ -26,6 +26,13 @@ nav{
     color: white;
 }
 
+.navlista{
+    display: flex;
+    width: 100%;
+    justify-content: end;
+    height: inherit;
+}
+
 nav span h1{
     padding-left: 10px;
     font-size: 20px;
@@ -34,6 +41,8 @@ nav span h1{
 nav span a {
     text-decoration: none;
     color: inherit;
+    height: 100%;
+    width: 100%;
 }
 
 .goldenspan{
@@ -81,17 +90,19 @@ nav span a {
 }
 
 .nav-list{
-    margin-right: 20px;
     display: flex;
     justify-content: flex-end;
     list-style: none;
     gap: 35px;
+    padding-inline-start: 0px;
+    margin-right: 5px;
 }
 
 .nav-list li a{
     text-decoration: none;
     color: inherit;
     font-family: 'Ibarra Real Nova';
+    font-size: 14px;
 }
 
 .nav-list li:hover{
@@ -963,4 +974,87 @@ input[type=checkbox]:checked ~ div {
 
 .discountedtotalcost h3{
     font-family: "Noto Serif Display", serif;
+}
+
+@media only screen and (max-width: 550px) {
+    nav {
+        align-items: flex-start;
+    }
+
+    .nav-list{
+        gap: 13px;
+        margin-right: 5px;
+        width: inherit;
+    }
+
+    .nav-list li {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .nav-list li a{
+        font-size: 10px;
+    }
+
+    nav span h1{
+        font-size: 11px;
+        width: 50%;
+    }
+
+    .info h3{
+        font-size: 14px;
+    }
+
+    .info p{
+        font-size: 13px;
+    }
+
+    .bigger{
+        font-size: 20px;
+    }
+
+    .goldenOasis{
+        font-size:20px;
+        position: static;
+    }
+
+    .picsAndInfo{
+        flex-direction: column;
+        height: 200vh;
+    }
+
+    .picColumn{
+        width: 100%;
+    }
+
+    .infoColumn{
+        width: 100%;
+    }
+
+    .infoColumn .upper{
+        position: static;
+    }
+
+    .infoColumn .lower{
+        position: static;
+    }
+
+    .bookingWrapper{
+        flex-direction: column;
+    }
+
+    .massageroom{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .discountjpg{
+        height: 250px;
+        width: 52%;
+    }
+
+    .pool-image, .massage-image {
+        height: 280px;
+        width: 280px;
+    }
 }
